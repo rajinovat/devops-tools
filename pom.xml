@@ -34,60 +34,26 @@
                 </snapshotRepository>
         </distributionManagement>	
 	<build>
+	 <plugins>
+	<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/package.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+	</plugins>
 	
-		<plugins> 
- 	<plugin> 
-		<groupId>com.google.code.maven-replacer-plugin</groupId> 
-			<artifactId>replacer</artifactId> 
-			<version>1.5.3</version>
- 			<executions> 
-				<execution> 
-				<phase>prepare-package</phase> 
-			<goals> 
-			<goal>replace</goal> 
-			</goals>
-			</execution> 
-			</executions> 
-			<configuration> 
-			<file>jenkins_job_config.xml</file> 
-			<replacements> 
-			<replacement> 
-			<token>##COMMONSLIBNAME##</token> 
-			<value>${COMMONSLIBNAME}</value> 
-			</replacement>
-
-
-			<replacement> 
-			<token>##COMMONSLIBBRANCH##</token> 
-			<value>${COMMONSLIBBRANCH}</value> 
-			</replacement>
-
-			<replacement> 
-			<token>##INTEGRATIONAPP##</token> 
-			<value>${INTEGRATIONGITREPO}</value> 
-			</replacement>
-
-
-			<replacement> 
-			<token>##GITBRANCH##</token> 
-			<value>${GITBRANCH}</value> 
-			</replacement>
-			
-			<replacement> 
-			<token>##GITHOST##</token> 
-			<value>${GITHOST}</value> 
-			</replacement>
-						
-			<replacement> 
-			<token>##GITUSER##</token> 
-			<value>${GITUSER}</value> 
-			</replacement>
-			</replacements>	
- 
-			</configuration> 
-			</plugin> 
-			</plugins>
-
 </build>
 
 

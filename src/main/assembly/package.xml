@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<assembly>
+    <id>package</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+ <fileSets>
+       <fileSet>
+            <directory>${basedir}/src/main/script/</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>install.sh</include>
+             </includes>
+             <filtered>true</filtered>
+        </fileSet>
+        <fileSet>
+		
+            <directory>${basedir}/src/main/</directory>
+            <outputDirectory>.</outputDirectory>
+            <includes>
+                <include>templates/**</include>
+             </includes>
+             <filtered>true</filtered>
+        </fileSet>
+ </fileSets>
+</assembly>

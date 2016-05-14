@@ -29,14 +29,14 @@ usage: $0 options
 
 OPTIONS:
 	-g gold repository owner 	- The owner of gold master repository
-	-P patternName				- Name of the gold master repository
-	-t componentType			- Type of the component. Possible values [iib] [zos] [apic]
-	-c componentName			- Name of the new component.This value will be used to create target cloned repository  
-	-u clone username			- The user cloning from gold master repository
-	-p clone password 			- The password of the user cloning from gold master repository
-	-U gitUrl					- The git url e.g github.com
-	-O gitPort					- Git port
-	-S scm						- SCM type [gitblit] [stash]
+	-P patternName			- Name of the gold master repository
+	-t componentType		- Type of the component. Possible values [iib] [zos] [apic]
+	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
+	-u clone username		- The user cloning from gold master repository
+	-p clone password		- The password of the user cloning from gold master repository
+	-U githost			- The git url e.g github.com
+	-O gitPort			- Git port
+	-S scm				- SCM type [gitblit] [stash]
 EOF
 }
 
@@ -133,10 +133,6 @@ function parseParameters() {
 parseParameters $@
 createEmptyRepo
 forkGitRepo
-
-
-# Pattern forking complete
-#echo "Forking from ${gitURL}/${goldUser}/${patternName}.git into ${gitURL}/${cloneUser}/${componentName}.git  is complete."
 
 
 exit 0
