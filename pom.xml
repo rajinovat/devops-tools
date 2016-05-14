@@ -4,13 +4,35 @@
 <!--Changes -->
 	<modelVersion>4.0.0</modelVersion>
 	
-	<groupId>com.anz.api</groupId>
-	<artifactId>DevOps-Templates</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<groupId>com.anz</groupId>
+	<artifactId>devops-templates</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	
+<properties>
+	<!-- <scm.url>scm:git:https://aubuilddsa@localhost:8444/r/dev1/test-api201.git</scm.url>  -->
+	<scm.url>${SCMURL}</scm.url>	
+</properties>
 
+  	<scm>
+		<url>scm:git:${scm.url}</url>
+		<connection>scm:git:${scm.url}</connection>
+		<developerConnection>scm:git:${scm.url}</developerConnection>
+		<tag>devops-templates-0.0.1</tag>
+	</scm>
 
+        <distributionManagement>
+                <repository>
+                        <id>release</id>
+                        <url>http://localhost:8081/artifactory/ext-release-local</url>
+                        <uniqueVersion>true</uniqueVersion>
+                </repository>
+                <snapshotRepository>
+                        <id>snapshot</id>
+                        <url>http://localhost:8081/artifactory/ext-snapshot-local</url>
+                        <uniqueVersion>true</uniqueVersion>
+                </snapshotRepository>
+        </distributionManagement>	
 	<build>
 	
 		<plugins> 
