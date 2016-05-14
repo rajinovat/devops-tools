@@ -16,7 +16,7 @@ componentType=
 componentName=
 cloneUser=
 clonePassword=
-scmname=
+scmsource=
 gitHOST=
 gitPort=
 gitURLPattern=
@@ -42,7 +42,7 @@ OPTIONS:
 	-p clone password		- The password of the user cloning from gold master repository
 	-U githost				- The git url e.g [github.com] [localhost]
 	-O gitPort				- Git port
-	-S scmname					- scmname type [gitblit] [stash]
+	-S scmsource					- scmsource type [gitblit] [stash]
     -J jenkinsHost			- Jinkins Hostname
 	-k jenkinsPort			- Jenkins Port
         
@@ -53,7 +53,7 @@ function createEmptyRepo()
 {
 jsonPost="\"name\": \"${cloneUser}/${componentName}.git\",\"description\": \"${componentName}\",\"owners\": [\"${CIUser}\",\"${cloneUser}\"],\"accessRestriction\": PUSH"
 
-if [ "${scmname}"	==	"gitblit"	]; then		
+if [ "${scmsource}"	==	"gitblit"	]; then		
 	 curl --insecure --user ${cloneUser}:${clonePassword} -X POST -H 'content-type: application/json;' --data "{${jsonPost}}"  https://${gitHOST}:${gitPort}/rpc/?req=CREATE_REPOSITORY
 fi
 
@@ -94,7 +94,7 @@ cd $CWD/templates
 
 jenkins_template="${componentType}_jenkins_template.xml"
 
-perl -pi -e 's/scmnameURL/`echo ${gitURLComponent}`/g' ${jenkins_template}
+perl -pi -e 's/scmsourceURL/`echo ${gitURLComponent}`/g' ${jenkins_template}
 
 curl -X POST -H "Content-Type:application/xml" -d @${jenkins_template} "http://${jenkinsHost}:${jenkinsPort}/createItem?name=${componentName}"
 
@@ -134,7 +134,7 @@ function parseParameters() {
 	            gitPort=$OPTARG 
 	             ;;    	   
 	        S)
-	            scmname=$OPTARG
+	            scmsource=$OPTARG
 	             ;;
 	        J)  
 		    jenkinsHost=$OPTARG
@@ -150,9 +150,9 @@ function parseParameters() {
 	done
 	
 	# ensure required params are not blank
-	echo "goldUser=$goldUser,patternName=$patternName,componentType=$componentType,componentName=$componentName,cloneUser=$cloneUser,clonePassword=$clonePassword,gitHOST=${gitHOST},gitPort=${gitPort},scmname=${scmname},jenkinsHost=${jenkinsHost},jenkinsPort=${jenkinsPort}"
+	echo "goldUser=$goldUser,patternName=$patternName,componentType=$componentType,componentName=$componentName,cloneUser=$cloneUser,clonePassword=$clonePassword,gitHOST=${gitHOST},gitPort=${gitPort},scmsource=${scmsource},jenkinsHost=${jenkinsHost},jenkinsPort=${jenkinsPort}"
 	
-	if [[ -z $goldUser ]] || [[ -z $patternName ]] || [[ -z $componentType ]] || [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmname ]] || [[ -z $jenkinsHost ]] || [[ -z $jenkinsPort ]] 
+	if [[ -z $goldUser ]] || [[ -z $patternName ]] || [[ -z $componentType ]] || [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmsource ]] || [[ -z $jenkinsHost ]] || [[ -z $jenkinsPort ]] 
 	then
 		usage
 		exit 1
