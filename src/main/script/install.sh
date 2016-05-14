@@ -94,7 +94,9 @@ cd $CWD/templates
 
 jenkins_template="${componentType}_jenkins_template.xml"
 
-perl -pi -e 's/scmsourceURL/`echo ${gitURLComponent}`/g' ${jenkins_template}
+replace_quote=$(printf '%s' "$gitURLComponent" | sed 's/[#\]/\\\-/g')
+
+perl -pi -e "s#SCMURL#${replace_quote}#g" ${jenkins_template}
 
 curl -X POST -H "Content-Type:application/xml" -d @${jenkins_template} "http://${jenkinsHost}:${jenkinsPort}/createItem?name=${componentName}"
 
