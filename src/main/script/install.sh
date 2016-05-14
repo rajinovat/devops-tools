@@ -45,6 +45,7 @@ OPTIONS:
 	-S scm				- SCM type [gitblit] [stash]
         -J jenkinsHost			- Jinkins Hostname
 	-k jenkinsPort			- Jenkins Port
+        
 EOF
 }
 
