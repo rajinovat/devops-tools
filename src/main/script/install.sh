@@ -10,16 +10,15 @@
 # --p clone password 			- The password of the user cloning from gold master repository
 # --U gitHOST				- The git url e.g https://github.com
 
-goldUser=${goldUser}
-patternName=${patternName}
-componentType=${componentType}
-componentName=${componentName}
-cloneUser=${cloneUser}
-clonePassword=${clonePassword}
-scm=${scm}
-
-gitHOST=${gitHOST}
-gitPort=${gitPort}
+goldUser=
+patternName=
+componentType=
+componentName=
+cloneUser=
+clonePassword=
+scm=
+gitHOST=
+gitPort=
 gitURLPattern=
 gitURLComponent=
 CIUser="aubuilddsa"
@@ -90,7 +89,7 @@ git push --set-upstream "https://${cloneUser}:${clonePassword}@${gitHOST}:${gitP
 function createJenkinsJob()
 {
 
-jenkins_template="${componentType}_jenkins_template.xml"
+jenkins_template="templates/${componentType}_jenkins_template.xml"
 
 perl -pi -e "s/SCMURL/${gitURLComponent}/g" ${jenkins_template}
 
