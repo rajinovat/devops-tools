@@ -40,10 +40,10 @@ OPTIONS:
 	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
 	-u clone username		- The user cloning from gold master repository
 	-p clone password		- The password of the user cloning from gold master repository
-	-U githost			- The git url e.g [github.com] [localhost]
-	-O gitPort			- Git port
-	-S scm				- SCM type [gitblit] [stash]
-        -J jenkinsHost			- Jinkins Hostname
+	-U githost				- The git url e.g [github.com] [localhost]
+	-O gitPort				- Git port
+	-S scm					- SCM type [gitblit] [stash]
+    -J jenkinsHost			- Jinkins Hostname
 	-k jenkinsPort			- Jenkins Port
         
 EOF
@@ -100,7 +100,7 @@ curl -X POST -H "Content-Type:application/xml" -d @${jenkins_template} "http://$
 
 
 function parseParameters() {
-	while getopts "g:P:t:c:u:p:U:O:S:J:k" OPTION
+	while getopts "g:P:t:c:u:p:U:O:S:J:k:" OPTION
 	do
 	     case $OPTION in
 	        h)
@@ -134,15 +134,12 @@ function parseParameters() {
 	        S)
 	            scm=$OPTARG
 	             ;;
-
 	        J)  
-		    jenkinsHost=$OPTARG
-		    ;;
-
-                k)
-		    jenkinsPort=$OPTARG
-		   ;;		   	 
-
+			    jenkinsHost=$OPTARG
+			    ;;
+            k)
+			    jenkinsPort=$OPTARG
+			   ;;		   	 
 	        ?)
 	             usage
 	             exit
