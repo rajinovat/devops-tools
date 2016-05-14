@@ -1,0 +1,13 @@
+{
+  "name": "##INTEGRATIONAPP##",
+  "description": "IIB BAR Component for ##INTEGRATIONAPP##",
+  "importAutomatically": true,
+  "useVfs": true,
+  "defaultVersionType": "FULL",
+  "templateName": "IIB_COMPONENT",
+  "sourceConfigPlugin": "Artifactory",
+  "properties": {
+   "ArtifactoryComponentProperties\/artifactId":"##INTEGRATIONAPP##",
+   "ArtifactoryComponentProperties\/groupId":"com.anz.api"
+      }
+}

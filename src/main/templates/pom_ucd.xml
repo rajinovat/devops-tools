@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<!--Changes -->
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.anz.api</groupId>
+	<artifactId>DevOps-Templates</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+
+
+	<build>
+	
+		<plugins> 
+ 	<plugin> 
+		<groupId>com.google.code.maven-replacer-plugin</groupId> 
+			<artifactId>replacer</artifactId> 
+			<version>1.5.3</version>
+ 			<executions> 
+				<execution> 
+			        <id>component</id>
+				<phase>prepare-package</phase> 
+			<goals> 
+			<goal>replace</goal> 
+			</goals>
+
+			            <configuration>
+                              <file>createComponent.json</file>
+                        <replacements>
+
+                        <replacement>
+                        <token>##INTEGRATIONAPP##</token>
+                        <value>${INTEGRATIONGITREPO}</value>
+                        </replacement>
+
+                        </replacements>
+
+                        </configuration>
+
+			</execution> 
+
+        			<execution>
+                                <id>component_snapshot</id>
+                                <phase>prepare-package</phase>
+                        <goals>
+                        <goal>replace</goal>
+                        </goals>
+
+                                    <configuration>
+                              <file>createComponentSnapshot.json</file>
+                        <replacements>
+
+                        <replacement>
+                        <token>##INTEGRATIONAPP##</token>
+                        <value>${INTEGRATIONGITREPO}</value>
+                        </replacement>
+
+                        </replacements>
+
+                        </configuration>
+
+                        </execution>
+
+
+			<execution>
+			<id>property</id>
+			<goals>
+                        <goal>replace</goal>
+                        </goals>
+			<configuration>
+                      
+                        <file>setComponentProperty.json</file>
+                        <replacements>
+                        <replacement>
+                        <token>##INTEGRATIONAPP##</token>
+                        <value>${INTEGRATIONGITREPO}</value>
+                        </replacement>
+
+                        </replacements>
+
+                        </configuration>
+
+
+			</execution>
+
+			</executions> 
+
+			</plugin> 
+			</plugins>
+
+</build>
+
+
+</project>

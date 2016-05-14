@@ -1,0 +1,4 @@
+{
+  "name":"bar.filename.iib", 
+  "value":"##INTEGRATIONAPP##-${p:version.name}.bar"
+}
