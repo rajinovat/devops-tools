@@ -25,6 +25,7 @@ CIUser="aubuilddsa"
 destFolder="tmp"
 jenkinsHost=
 jenkinsPort=
+CWD="$(pwd)"
 
 # Do user input function
 
@@ -89,9 +90,11 @@ git push --set-upstream "https://${cloneUser}:${clonePassword}@${gitHOST}:${gitP
 function createJenkinsJob()
 {
 
-jenkins_template="templates/${componentType}_jenkins_template.xml"
+cd $CWD/templates
 
-perl -pi -e "s/SCMURL/${gitURLComponent}/g" ${jenkins_template}
+jenkins_template="${componentType}_jenkins_template.xml"
+
+perl -pi -e 's/SCMURL/`echo ${gitURLComponent}`/g' ${jenkins_template}
 
 curl -X POST -H "Content-Type:application/xml" -d @${jenkins_template} "http://${jenkinsHost}:${jenkinsPort}/createItem?name=${componentName}"
 
@@ -124,20 +127,20 @@ function parseParameters() {
 	        p)
 	            clonePassword=$OPTARG
 	             ;;
-			U)
+		U)
 	            gitHOST=$OPTARG
 	             ;;
 	        O)
-	        	gitPort=$OPTARG 
-	        	;;    	   
+	            gitPort=$OPTARG 
+	             ;;    	   
 	        S)
 	            scm=$OPTARG
 	             ;;
 	        J)  
-			    jenkinsHost=$OPTARG
-			    ;;
-            k)
-			    jenkinsPort=$OPTARG
+		    jenkinsHost=$OPTARG
+		    ;;
+                k)
+		    jenkinsPort=$OPTARG
 			   ;;		   	 
 	        ?)
 	             usage
