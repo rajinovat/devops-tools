@@ -1,5 +1,5 @@
 #!/bin/bash
-#   Script to configure a new component build job
+#   Script to configure a new component build job 
 
 # Input Parameters
 # --g gold repository owner - The owner of gold master repository
