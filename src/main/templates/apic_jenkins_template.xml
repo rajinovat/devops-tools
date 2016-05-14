@@ -11,7 +11,7 @@
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <!-- <url>https://aubuilddsa@localhost:8444/r/dev1/test-api201.git</url>  -->
-        <url>${SCMURL}</url>
+        <url>SCMURL</url>
         <credentialsId>fc229ec4-5edf-4a57-9ebf-652e86e35c06</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
