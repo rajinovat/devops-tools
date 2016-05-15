@@ -23,7 +23,6 @@ gitURLPattern=
 gitURLComponent=
 CIUser="aubuilddsa"
 destFolder="tmp"
-CWD="$(pwd)"
 
 # Do user input function
 
@@ -116,7 +115,7 @@ function parseParameters() {
 	        p)
 	            clonePassword=$OPTARG
 	             ;;
-			U)
+		U)
 	            gitHOST=$OPTARG
 	             ;;
 	        O)

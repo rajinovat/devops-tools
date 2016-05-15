@@ -2,15 +2,29 @@
 #   Script to configure a new component build job & UCD
 
 # Input Parameters
-#	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
-#	-t componentType		- Type of the component. Possible values [iib] [zconnect] [apic]
-#	-u ucdUser			- UCD User
-#	-p ucdPassword			- UCD Password
-#	-O ucdPort			- UCD Port
-#	-H ucdHost			- UCD Host  
+# --g gold repository owner - The owner of gold master repository
+# --P patternName			- Name of the gold master repository
+# --t componentType			- Type of the component. Possible values [iib] [zos] [apic]
+# --c componentName			- Name of the new component.This value will be used to create target cloned repository  
+# --u clone username			- The user cloning from gold master repository
+# --p clone password 			- The password of the user cloning from gold master repository
+# --U gitHOST				- The git url e.g https://github.com
 
-componentName=
+goldUser=
+patternName=
 componentType=
+componentName=
+cloneUser=
+clonePassword=
+scmtype=
+gitHOST=
+gitPort=
+gitURLPattern=
+gitURLComponent=
+CIUser="aubuilddsa"
+destFolder="tmp"
+jenkinsHost=
+jenkinsPort=
 ucdUser=
 ucdHost=
 ucdPassword=
@@ -24,12 +38,19 @@ cat << EOF
 usage: $0 options
 
 OPTIONS:
-	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
+	-g gold repository owner 	- The owner of gold master repository
+	-P patternName			- Name of the gold master repository
 	-t componentType		- Type of the component. Possible values [iib] [zconnect] [apic]
-	-u ucdUser			- UCD User
-	-p ucdPassword			- UCD Password
-	-H ucdHost			- UCD Host         
-	-O ucdPort			- UCD Port
+	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
+	-u clone username		- The user cloning from gold master repository
+	-p clone password		- The password of the user cloning from gold master repository
+	-U githost			- The git url e.g [github.com] [localhost]
+	-O gitPort			- Git port
+	-S scmtype			- scmtype type [gitblit] [stash]
+	-UU ucdUser			- UCD User
+	-UP ucdPassword			- UCD Password
+	-UH ucdHost			- UCD Host         
+	-UO ucdPort			- UCD Port
 EOF
 }
 
@@ -45,29 +66,56 @@ curl  -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/compone
 }
 
 function parseParameters() {
-	while getopts "c:t:u:p:H:O" OPTION
+	while getopts "g:P:t:c:u:p:U:O:S:J:k:UU:UP:UH:UO:" OPTION
 	do
 	     case $OPTION in
 	        h)
 	             usage
 	             exit 1
 	             ;;
+        	g)
+	            goldUser=$OPTARG
+	             ;;
+		P)
+	            patternName=$OPTARG
+	             ;;
+	        t)
+	            componentType=$OPTARG
+	             ;;
 	        c)
 	            componentName=$OPTARG
 	             ;;
-		t)
-	            componentType=$OPTARG
+	        u)
+	            cloneUser=$OPTARG
 	             ;;
-		u)
+	        p)
+	            clonePassword=$OPTARG
+	             ;;
+		U)
+	            gitHOST=$OPTARG
+	             ;;
+	        O)
+	            gitPort=$OPTARG 
+	             ;;    	   
+	        S)
+	            scmtype=$OPTARG
+	             ;;
+	        J)  
+		    jenkinsHost=$OPTARG
+		    ;;
+               k)
+		    jenkinsPort=$OPTARG
+		    ;;	
+		UU)
 	            ucdUser=$OPTARG
 	             ;;
-		p)
+		UP)
 	            ucdPassword=$OPTARG
 	             ;;	
-		H)
+		UH)
 	            ucdHost=$OPTARG
 	             ;;		
-		O)
+		UO)
 	            ucdPort=$OPTARG
 	             ;;		
 	        ?)
@@ -80,7 +128,7 @@ function parseParameters() {
 	# ensure required params are not blank
 	echo "componentName=$componentName,componentType=$componentType,ucdUser=$ucdUser,ucdPassword=$ucdPassword,ucdHost=$ucdHost,ucdPort=$ucdPort"
 	
-	if [[ -z $componentName ]] || [[ -z $componentType ]] || [[ -z $ucdUser ]] || [[ -z $ucdPassword ]] || [[ -z $ucdHost ]] || [[ -z $ucdPort ]]
+	if [[ -z $goldUser ]] || [[ -z $patternName ]] || [[ -z $componentType ]] || [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmtype ]]  || [[ -z $ucdUser ]] || [[ -z $ucdPassword ]] || [[ -z $ucdHost ]] || [[ -z $ucdPort ]]
 	then
 		usage
 		exit 1
