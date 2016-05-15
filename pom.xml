@@ -16,7 +16,7 @@
 		<url>scm:git:${scm.url}</url>
 		<connection>scm:git:${scm.url}</connection>
 		<developerConnection>scm:git:${scm.url}</developerConnection>
-		<tag>devops-tools-1.0.8</tag>
+		<tag>devops-tools-1.0.10</tag>
 	</scm>
 <!-- Changed here  -->
         <distributionManagement>
