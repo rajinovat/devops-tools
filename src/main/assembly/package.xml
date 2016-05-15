@@ -10,7 +10,9 @@
             <directory>${basedir}/src/main/script/</directory>
             <outputDirectory>.</outputDirectory>
             <includes>
-                <include>install.sh</include>
+                <include>gitsetup.sh</include>
+                <include>jenkinssetup.sh</include>
+                <include>ucdsetup.sh</include>    
              </includes>
              <filtered>true</filtered>
         </fileSet>
