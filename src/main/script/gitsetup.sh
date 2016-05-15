@@ -38,10 +38,10 @@ OPTIONS:
 	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
 	-u clone username		- The user cloning from gold master repository
 	-p clone password		- The password of the user cloning from gold master repository
-	-U githost				- The git url e.g [github.com] [localhost]
-	-O gitPort				- Git port
-	-S scmtype					- scmtype type [gitblit] [stash]
-    -J jenkinsHost			- Jinkins Hostname
+	-U githost			- The git url e.g [github.com] [localhost]
+	-O gitPort			- Git port
+	-S scmtype			- scmtype type [gitblit] [stash]
+    	-J jenkinsHost			- Jinkins Hostname
 	-k jenkinsPort			- Jenkins Port
 EOF
 }
@@ -60,12 +60,19 @@ function forkGitRepo()
 {
 #Fork a git repo
 
+
+if [ "${componentType}"	 ==  "iib"	]; then	
+
+	patternName="${patternName}-parent"
+	componentName="${componentName}-parent"
+fi
+
+
 git config --global http.sslVerify false
 
 gitURLPattern="https://${goldUser}@${gitHOST}:${gitPort}/r/${componentType}/${patternName}.git"
 
 gitURLComponent="https://${cloneUser}@${gitHOST}:${gitPort}/r/${cloneUser}/${componentName}.git"
-
 
 rm -rf /${destFolder}/${patternName} /${destFolder}/${componentName}
 

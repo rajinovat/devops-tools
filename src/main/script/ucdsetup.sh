@@ -2,30 +2,20 @@
 #   Script to configure a new component build job & UCD
 
 # Input Parameters
-# --g gold repository owner - The owner of gold master repository
-# --P patternName			- Name of the gold master repository
-# --t componentType			- Type of the component. Possible values [iib] [zos] [apic]
-# --c componentName			- Name of the new component.This value will be used to create target cloned repository  
-# --u clone username			- The user cloning from gold master repository
-# --p clone password 			- The password of the user cloning from gold master repository
-# --U gitHOST				- The git url e.g https://github.com
+#	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
+#	-t componentType		- Type of the component. Possible values [iib] [zconnect] [apic]
+#	-u ucdUser			- UCD User
+#	-p ucdPassword			- UCD Password
+#	-O ucdPort			- UCD Port
+#	-H ucdHost			- UCD Host  
 
-goldUser=
-patternName=
-componentType=
 componentName=
-cloneUser=
-clonePassword=
-scmsource=
-gitHOST=
-gitPort=
-gitURLPattern=
-gitURLComponent=
-CIUser="aubuilddsa"
-destFolder="tmp"
-jenkinsHost=
-jenkinsPort=
-CWD="$(pwd)"
+componentType=
+ucdUser=
+ucdHost=
+ucdPassword=
+ucdPort=
+
 
 # Do user input function
 
@@ -34,116 +24,52 @@ cat << EOF
 usage: $0 options
 
 OPTIONS:
-	-g gold repository owner 	- The owner of gold master repository
-	-P patternName			- Name of the gold master repository
-	-t componentType		- Type of the component. Possible values [iib] [zconnect] [apic]
 	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
-	-u clone username		- The user cloning from gold master repository
-	-p clone password		- The password of the user cloning from gold master repository
-	-U githost				- The git url e.g [github.com] [localhost]
-	-O gitPort				- Git port
-	-S scmsource					- scmsource type [gitblit] [stash]
-    -J jenkinsHost			- Jinkins Hostname
-	-k jenkinsPort			- Jenkins Port
-        
+	-t componentType		- Type of the component. Possible values [iib] [zconnect] [apic]
+	-u ucdUser			- UCD User
+	-p ucdPassword			- UCD Password
+	-H ucdHost			- UCD Host         
+	-O ucdPort			- UCD Port
 EOF
 }
 
-function createEmptyRepo()
-{
-jsonPost="\"name\": \"${cloneUser}/${componentName}.git\",\"description\": \"${componentName}\",\"owners\": [\"${CIUser}\",\"${cloneUser}\"],\"accessRestriction\": PUSH"
 
-if [ "${scmsource}"	==	"gitblit"	]; then		
-	 curl --insecure --user ${cloneUser}:${clonePassword} -X POST -H 'content-type: application/json;' --data "{${jsonPost}}"  https://${gitHOST}:${gitPort}/rpc/?req=CREATE_REPOSITORY
-fi
+function configureUCD()
+{
+ucd_component_json="templates/createComponent.json"
+
+perl -pi -e "s/##componentName##/${componentName}/g" ${ucd_component_json}
+
+curl  -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/component/create" -X PUT -d @${ucd_component_json}
 
 }
-
-function forkGitRepo()
-{
-#Fork a git repo
-
-git config --global http.sslVerify false
-
-gitURLPattern="https://${goldUser}@${gitHOST}:${gitPort}/r/${componentType}/${patternName}.git"
-
-gitURLComponent="https://${cloneUser}@${gitHOST}:${gitPort}/r/${cloneUser}/${componentName}.git"
-
-
-rm -rf /${destFolder}/${patternName} /${destFolder}/${componentName}
-
-git clone "${gitURLPattern}" /${destFolder}/${patternName}
-
-git clone "${gitURLComponent}" /${destFolder}/${componentName}
-
-cd "/${destFolder}/${patternName}";rm -rf ".git";
-
-cp -rp * /${destFolder}/${componentName};cd /${destFolder}/${componentName}
-
-git add *;git commit -m "Initial Clone";git config --global push.default simple
-
-git push --set-upstream "https://${cloneUser}:${clonePassword}@${gitHOST}:${gitPort}/r/${cloneUser}/${componentName}.git" master
-
-}
-
-
-function createJenkinsJob()
-{
-
-cd $CWD/templates
-
-jenkins_template="${componentType}_jenkins_template.xml"
-
-replace_quote=$(printf '%s' "$gitURLComponent" | sed 's/[#\]/\\\-/g')
-
-perl -pi -e "s#SCMURL#${replace_quote}#g" ${jenkins_template}
-
-curl -X POST -H "Content-Type:application/xml" -d @${jenkins_template} "http://${jenkinsHost}:${jenkinsPort}/createItem?name=${componentName}"
-
-}
-
 
 function parseParameters() {
-	while getopts "g:P:t:c:u:p:U:O:S:J:k:" OPTION
+	while getopts "c:t:u:p:H:O" OPTION
 	do
 	     case $OPTION in
 	        h)
 	             usage
 	             exit 1
 	             ;;
-	        g)
-	            goldUser=$OPTARG
-	             ;;
-			P)
-	            patternName=$OPTARG
-	             ;;
-	        t)
-	            componentType=$OPTARG
-	             ;;
 	        c)
 	            componentName=$OPTARG
 	             ;;
-	        u)
-	            cloneUser=$OPTARG
+		t)
+	            componentType=$OPTARG
 	             ;;
-	        p)
-	            clonePassword=$OPTARG
+		u)
+	            ucdUser=$OPTARG
 	             ;;
-		U)
-	            gitHOST=$OPTARG
-	             ;;
-	        O)
-	            gitPort=$OPTARG 
-	             ;;    	   
-	        S)
-	            scmsource=$OPTARG
-	             ;;
-	        J)  
-		    jenkinsHost=$OPTARG
-		    ;;
-                k)
-		    jenkinsPort=$OPTARG
-			   ;;		   	 
+		p)
+	            ucdPassword=$OPTARG
+	             ;;	
+		H)
+	            ucdHost=$OPTARG
+	             ;;		
+		O)
+	            ucdPort=$OPTARG
+	             ;;		
 	        ?)
 	             usage
 	             exit
@@ -152,9 +78,9 @@ function parseParameters() {
 	done
 	
 	# ensure required params are not blank
-	echo "goldUser=$goldUser,patternName=$patternName,componentType=$componentType,componentName=$componentName,cloneUser=$cloneUser,clonePassword=$clonePassword,gitHOST=${gitHOST},gitPort=${gitPort},scmsource=${scmsource},jenkinsHost=${jenkinsHost},jenkinsPort=${jenkinsPort}"
+	echo "componentName=$componentName,componentType=$componentType,ucdUser=$ucdUser,ucdPassword=$ucdPassword,ucdHost=$ucdHost,ucdPort=$ucdPort"
 	
-	if [[ -z $goldUser ]] || [[ -z $patternName ]] || [[ -z $componentType ]] || [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmsource ]] || [[ -z $jenkinsHost ]] || [[ -z $jenkinsPort ]] 
+	if [[ -z $componentName ]] || [[ -z $componentType ]] || [[ -z $ucdUser ]] || [[ -z $ucdPassword ]] || [[ -z $ucdHost ]] || [[ -z $ucdPort ]]
 	then
 		usage
 		exit 1
@@ -164,10 +90,8 @@ function parseParameters() {
 # start of main program
 
 parseParameters $@
-createEmptyRepo
-forkGitRepo
 
-createJenkinsJob
+configureUCD
 
 
 exit 0
