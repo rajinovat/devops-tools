@@ -73,15 +73,15 @@ gitURLPattern="https://${goldUser}@${gitHOST}:${gitPort}/r/${componentType}/${pa
 
 gitURLComponent="https://${cloneUser}@${gitHOST}:${gitPort}/r/${cloneUser}/${componentName}.git"
 
-rm -rf /${destFolder}/${patternName} /${destFolder}/${componentName}
+rm -rf "/${destFolder}/${patternName}/${destFolder}/${componentName}"
 
 git clone "${gitURLPattern}" /${destFolder}/${patternName}
 
 git clone "${gitURLComponent}" /${destFolder}/${componentName}
 
-cd "/${destFolder}/${patternName}";rm -rf ".git";
+cd "/${destFolder}/${patternName}"|| rm -rf ".git";
 
-cp -rp * /${destFolder}/${componentName};cd /${destFolder}/${componentName}
+cp -rp * /*${destFolder}*/*${componentName}*||cd /${destFolder}/${componentName}
 
 git add *;git commit -m "Initial Clone";git config --global push.default simple
 
@@ -143,7 +143,7 @@ function parseParameters() {
 
 # start of main program
 
-parseParameters $@
+parseParameters "$@"
 createEmptyRepo
 forkGitRepo
 

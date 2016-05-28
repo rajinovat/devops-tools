@@ -12,7 +12,8 @@
             <includes>
                 <include>gitsetup.sh</include>
                 <include>jenkinssetup.sh</include>
-                <include>ucdsetup.sh</include>    
+                <include>ucdsetup.sh</include>
+                <include>iibadmin.sh</include>    
              </includes>
              <filtered>true</filtered>
         </fileSet>

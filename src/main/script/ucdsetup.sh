@@ -100,28 +100,28 @@ function parseParameters() {
 	        S)
 	            scmtype=$OPTARG
 	             ;;
-	  		JU)  
-			    jenkinsUser=$OPTARG
-		    	;;
+	  	JU)  
+		    jenkinsUser=$OPTARG
+		    ;;
 	        JP)  
-		    	jenkinsPassword=$OPTARG
-		    	;;
+		    jenkinsPassword=$OPTARG
+		    ;;
 	        JH)  
-		   		jenkinsHost=$OPTARG
-		    	;;
-            JO)
-		    	jenkinsPort=$OPTARG
-		    	;;		 
-			UU)
+		    jenkinsHost=$OPTARG
+		    ;;
+            	JO)
+		    jenkinsPort=$OPTARG
+		    ;;		 
+		UU)
 	            ucdUser=$OPTARG
 	            ;;
-			UP)
+		UP)
 	            ucdPassword=$OPTARG
 	             ;;	
-			UH)
+		UH)
 	            ucdHost=$OPTARG
 	             ;;		
-			UO)
+		UO)
 	            ucdPort=$OPTARG
 	             ;;		
 	        ?)
@@ -143,7 +143,7 @@ function parseParameters() {
 
 # start of main program
 
-parseParameters $@
+parseParameters "$@"
 
 configureUCD
 

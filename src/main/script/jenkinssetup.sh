@@ -65,8 +65,7 @@ if [ "${scmtype}"	==	"gitblit"	]; then
 	gitURLComponent="https://${cloneUser}@${gitHOST}:${gitPort}/r/${cloneUser}/${componentName}.git"
 fi
 
-cd ../
-jenkins_template="templates/${componentType}_jenkins_template.xml"
+jenkins_template="../templates/${componentType}_jenkins_template.xml"
 
 replace_quote=$(printf '%s' "$gitURLComponent" | sed 's/[#\]/\\\-/g')
 

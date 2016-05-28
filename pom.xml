@@ -9,7 +9,7 @@
 	<packaging>pom</packaging>
 	
 <properties>
-	<scm.url> https://master@localhost:8444/r/devops-tools.git</scm.url>
+	<scm.url> https://github.com/rajinovat/devops-tools.git</scm.url>
 </properties>
 
   	<scm>

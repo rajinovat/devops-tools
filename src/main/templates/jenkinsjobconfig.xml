@@ -1,18 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<maven2-moduleset plugin="maven-plugin@2.12.1">
+<maven2-moduleset plugin="maven-plugin@2.7.1">
   <actions/>
   <description></description>
   <keepDependencies>false</keepDependencies>
-  <properties>
-    <hudson.model.ParametersDefinitionProperty/>
-  </properties>
+  <properties/>
   <scm class="hudson.plugins.git.GitSCM" plugin="git@2.4.4">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <!-- <url>https://aubuilddsa@localhost:8444/r/dev1/test-api201.git</url>  -->
         <url>SCMURL</url>
-        <credentialsId>fc229ec4-5edf-4a57-9ebf-652e86e35c06</credentialsId>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -34,10 +30,6 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
-  <rootModule>
-    <groupId>com.anz</groupId>
-    <artifactId>apic-commons</artifactId>
-  </rootModule>
   <goals>clean deploy</goals>
   <aggregatorStyleBuild>true</aggregatorStyleBuild>
   <incrementalBuild>false</incrementalBuild>
