@@ -66,7 +66,7 @@ curl  -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/compone
 }
 
 function parseParameters() {
-	while getopts "g:P:t:c:u:p:U:O:S:J:k:UU:UP:UH:UO:" OPTION
+	while getopts "g:P:t:c:u:p:U:O:S:JU:JP:JH:JO:UU:UP:UH:UO:" OPTION
 	do
 	     case $OPTION in
 	        h)
@@ -100,22 +100,28 @@ function parseParameters() {
 	        S)
 	            scmtype=$OPTARG
 	             ;;
-	        J)  
-		    jenkinsHost=$OPTARG
-		    ;;
-               k)
-		    jenkinsPort=$OPTARG
-		    ;;	
-		UU)
+	  		JU)  
+			    jenkinsUser=$OPTARG
+		    	;;
+	        JP)  
+		    	jenkinsPassword=$OPTARG
+		    	;;
+	        JH)  
+		   		jenkinsHost=$OPTARG
+		    	;;
+            JO)
+		    	jenkinsPort=$OPTARG
+		    	;;		 
+			UU)
 	            ucdUser=$OPTARG
-	             ;;
-		UP)
+	            ;;
+			UP)
 	            ucdPassword=$OPTARG
 	             ;;	
-		UH)
+			UH)
 	            ucdHost=$OPTARG
 	             ;;		
-		UO)
+			UO)
 	            ucdPort=$OPTARG
 	             ;;		
 	        ?)
