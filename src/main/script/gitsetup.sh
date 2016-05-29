@@ -185,11 +185,14 @@ function parseParameters() {
 	
 	# ensure required params are not blank
 	echo "goldUser=$goldUser,patternName=$patternName,componentName=$componentName,cloneUser=$cloneUser,clonePassword=$clonePassword,gitHOST=${gitHOST},gitPort=${gitPort},scmtype=${scmtype},command=${command}"
+
+	if [ "${command}"  ==  "create"	]; then
 	
-	if [[ -z $goldUser ]] || [[ -z $patternName ]] ||  [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmtype ]] || [[ -z $command ]]
-	then
-		usage
-		exit 1
+		if [[ -z $goldUser ]] || [[ -z $patternName ]] ||  [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmtype ]] || [[ -z $command ]]
+			then
+			usage
+			exit 1
+		fi
 	fi
 }
 

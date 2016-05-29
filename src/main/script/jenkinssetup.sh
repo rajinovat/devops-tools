@@ -127,12 +127,13 @@ function parseParameters() {
 	
 	# ensure required params are not blank
         echo "componentName=${componentName},gitHOST=${gitHOST},gitPort=${gitPort},jenkinsHost=${jenkinsHost},jenkinsPort=${jenkinsPort};command=${command}"	
-	
+if [ "${command}"  ==  "create"	]; then	
 	if [[ -z $patternName ]] || [[ -z $componentName ]] ||  [[ -z $gitHOST ]] || [[ -z $jenkinsUser ]] || [[ -z $jenkinsPassword ]] || [[ -z $jenkinsHost ]] || [[ -z $jenkinsPort ]] || [[ -z $command ]];
 	then
 		usage
 		exit 1
 	fi
+fi
 }
 
 # start of main program

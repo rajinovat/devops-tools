@@ -198,12 +198,13 @@ function parseParameters() {
 	done
 	# ensure required params are not blank
 	echo "PatternName=$patternName,ComponentName=$componentName,ucdUser=$ucdUser,ucdPassword=$ucdPassword,ucdHost=$ucdHost,ucdPort=$ucdPort,command=$command"
-	
+if [ "${command}"  ==  "create"	]; then	
 	if [[ -z $patternName ]] ||  [[ -z $componentName ]] || [[ -z $ucdUser ]] || [[ -z $ucdPassword ]] || [[ -z $ucdHost ]] || [[ -z $ucdPort ]] || [[ -z $command ]]
 	then
 		usage
 		exit 1
 	fi
+fi
 }
 
 # start of main program
