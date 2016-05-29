@@ -2,34 +2,16 @@
 #   Script to configure a new component build job & UCD
 
 # Input Parameters
-# --g gold repository owner - The owner of gold master repository
 # --P patternName			- Name of the gold master repository
-# --t componentType			- Type of the component. Possible values [iib] [zos] [apic]
 # --c componentName			- Name of the new component.This value will be used to create target cloned repository  
-# --u clone username			- The user cloning from gold master repository
-# --p clone password 			- The password of the user cloning from gold master repository
-# --U gitHOST				- The git url e.g https://github.com
 
-goldUser=
 patternName=
-componentType=
 componentName=
-cloneUser=
-clonePassword=
-scmtype=
-gitHOST=
-gitPort=
-gitURLPattern=
-gitURLComponent=
-CIUser="aubuilddsa"
-destFolder="tmp"
-jenkinsHost=
-jenkinsPort=
 ucdUser=
 ucdHost=
 ucdPassword=
 ucdPort=
-
+command=
 
 # Do user input function
 
@@ -38,103 +20,189 @@ cat << EOF
 usage: $0 options
 
 OPTIONS:
-	-g gold repository owner 	- The owner of gold master repository
-	-P patternName			- Name of the gold master repository
-	-t componentType		- Type of the component. Possible values [iib] [zconnect] [apic]
+	-p patternName			- Name of the gold master repository
 	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
-	-u clone username		- The user cloning from gold master repository
-	-p clone password		- The password of the user cloning from gold master repository
-	-U githost			- The git url e.g [github.com] [localhost]
-	-O gitPort			- Git port
-	-S scmtype			- scmtype type [gitblit] [stash]
-	-UU ucdUser			- UCD User
-	-UP ucdPassword			- UCD Password
-	-UH ucdHost			- UCD Host         
-	-UO ucdPort			- UCD Port
+	-u ucdUser			- UCD User
+	-w ucdPassword			- UCD Password
+	-h ucdHost			- UCD Host         
+	-o ucdPort			- UCD Port
+	
 EOF
 }
 
-
-function configureUCD()
+function checkIfObjectExists()
 {
-ucd_component_json="templates/createComponent.json"
 
-perl -pi -e "s/##componentName##/${componentName}/g" ${ucd_component_json}
+#Create UCD Component
+httpcode=`curl -i -k  -u  ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/component/info?component=${componentName}" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
 
-curl  -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/component/create" -X PUT -d @${ucd_component_json}
+if [ "$httpcode" -eq "200" ] ;
+then
+echo "$componentName Already Exists.."
+exit 1;
+fi
+
+httpcode=`curl -i -k  -u  ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/application/info?application=${componentName}-App" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
+
+if [ "$httpcode" -eq "200" ] ;
+then
+echo "$componentName-App Already Exists.."
+exit 1;
+fi
 
 }
 
+
+function checkIfObjectDoesNotExists()
+{
+
+#Create UCD Component
+httpcode=`curl -i -k  -u  ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/component/info?component=${componentName}" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
+
+if [ "$httpcode" -ne "200" ] ;
+then
+echo "$componentName Doesn't Exists.."
+exit 1;
+fi
+
+httpcode=`curl -i -k  -u  ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/application/info?application=${componentName}-App" 2>/dev/null | head -n 1 | cut -d$' ' -f2`
+
+if [ "$httpcode" -ne "200" ] ;
+then
+echo "$componentName-App Doesn't Exists.."
+exit 1;
+fi
+
+}
+
+
+function configureUCDObjects()
+{
+
+checkIfObjectExists
+
+componentType=${patternName%/*}
+#patternOnly=${patternName##*/}
+templatesrc="../templates"
+
+cp -rp ${templatesrc} /tmp
+ 
+templatelocation="/tmp/templates"
+
+ucd_component_json="${templatelocation}/createComponent.json"      #remove .. to reference template directory located at the root of the package 
+
+ucd_application_json="${templatelocation}/createApplication.json"    #remove .. to reference template directory located at the root of the package
+
+ucd_application_process_deploy_json="${templatelocation}/${componentType}_application_process_deploy.json"
+
+ucd_application_process_undeploy_json="${templatelocation}/${componentType}_application_process_undeploy.json"
+
+
+#Text replace componentName 
+
+perl -pi -e "s/##componentName##/${componentName}/g" ${ucd_component_json}
+
+perl -pi -e "s/##componentType##/${componentType}/g" ${ucd_component_json}
+
+perl -pi -e "s/##componentName##/${componentName}/g" ${ucd_application_json}
+
+perl -pi -e "s/##componentName##/${componentName}/g" ${ucd_application_process_deploy_json}
+
+perl -pi -e "s/##componentName##/${componentName}/g" ${ucd_application_process_undeploy_json}
+
+curl  -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/component/create" -X PUT -d @${ucd_component_json}
+
+#Create UCD Application
+curl  -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/application/create" -X PUT -d @${ucd_application_json}
+
+#Import UCD Component Version
+
+curl  -k  -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/component/integrate -X PUT -d {"component":"${componentName}"}"
+
+#Add Component to Application
+
+curl -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/application/addComponentToApp?component=${componentName}&application=${componentName}-App" -X PUT
+
+#Add  Application Process Deploy
+
+curl  -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/applicationProcess/create" -X PUT -d @${ucd_application_process_deploy_json}
+
+#Add  Application Process Un-Deploy
+
+curl  -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/applicationProcess/create" -X PUT -d @${ucd_application_process_undeploy_json}
+
+
+#Create Environment in an Application
+
+curl -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/environment/createEnvironment?application=${componentName}-App&name=Sandbox&color=pink" -X PUT
+
+#Add resource to an environment
+
+#curl -k -u ${ucdUser}:${ucdPassword} "https://${ucdHost}:${ucdPort}/cli/environment/addBaseResource?application=${componentName}-App&environment=Sandbox&resource=${componentType}-resource" -X PUT
+
+rm -rf ${templatelocation}
+}
+
+
+function deleteUCDObjects(){
+checkIfObjectDoesNotExists
+
+###Delete commands yet to complete
+}
+
+
+function executeCommands(){
+case $command in
+   create)
+   	configureUCDObjects
+ 	;;
+   delete)
+   	deleteUCDObjects
+;;
+   esac
+}
+
+
 function parseParameters() {
-	while getopts "g:P:t:c:u:p:U:O:S:JU:JP:JH:JO:UU:UP:UH:UO:" OPTION
+
+	while getopts "h:p:c:u:w:s:o:m:" OPTION
 	do
-	     case $OPTION in
-	        h)
+
+	  case $OPTION in
+	     h)
 	             usage
 	             exit 1
 	             ;;
-        	g)
-	            goldUser=$OPTARG
+	     p)
+	            patternName="$OPTARG"
 	             ;;
-		P)
-	            patternName=$OPTARG
-	             ;;
-	        t)
-	            componentType=$OPTARG
-	             ;;
-	        c)
+	     c)
 	            componentName=$OPTARG
 	             ;;
-	        u)
-	            cloneUser=$OPTARG
-	             ;;
-	        p)
-	            clonePassword=$OPTARG
-	             ;;
-		U)
-	            gitHOST=$OPTARG
-	             ;;
-	        O)
-	            gitPort=$OPTARG 
-	             ;;    	   
-	        S)
-	            scmtype=$OPTARG
-	             ;;
-	  	JU)  
-		    jenkinsUser=$OPTARG
-		    ;;
-	        JP)  
-		    jenkinsPassword=$OPTARG
-		    ;;
-	        JH)  
-		    jenkinsHost=$OPTARG
-		    ;;
-            	JO)
-		    jenkinsPort=$OPTARG
-		    ;;		 
-		UU)
+	     u)
 	            ucdUser=$OPTARG
 	            ;;
-		UP)
+	     w)
 	            ucdPassword=$OPTARG
-	             ;;	
-		UH)
+	             ;;
+	    s)
 	            ucdHost=$OPTARG
 	             ;;		
-		UO)
+	    o)
 	            ucdPort=$OPTARG
 	             ;;		
-	        ?)
+	    m)		command=$OPTARG
+	    		;;            
+	    ?)
 	             usage
 	             exit
 	             ;;
 	     esac
 	done
-	
 	# ensure required params are not blank
-	echo "componentName=$componentName,componentType=$componentType,ucdUser=$ucdUser,ucdPassword=$ucdPassword,ucdHost=$ucdHost,ucdPort=$ucdPort"
+	echo "PatternName=$patternName,ComponentName=$componentName,ucdUser=$ucdUser,ucdPassword=$ucdPassword,ucdHost=$ucdHost,ucdPort=$ucdPort,command=$command"
 	
-	if [[ -z $goldUser ]] || [[ -z $patternName ]] || [[ -z $componentType ]] || [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmtype ]]  || [[ -z $ucdUser ]] || [[ -z $ucdPassword ]] || [[ -z $ucdHost ]] || [[ -z $ucdPort ]]
+	if [[ -z $patternName ]] ||  [[ -z $componentName ]] || [[ -z $ucdUser ]] || [[ -z $ucdPassword ]] || [[ -z $ucdHost ]] || [[ -z $ucdPort ]] || [[ -z $command ]]
 	then
 		usage
 		exit 1
@@ -144,8 +212,5 @@ function parseParameters() {
 # start of main program
 
 parseParameters "$@"
-
-configureUCD
-
-
+executeCommands
 exit 0

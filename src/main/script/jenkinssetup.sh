@@ -4,30 +4,22 @@
 # Input Parameters
 # --g gold repository owner - The owner of gold master repository
 # --P patternName			- Name of the gold master repository
-# --t componentType			- Type of the component. Possible values [iib] [zos] [apic]
 # --c componentName			- Name of the new component.This value will be used to create target cloned repository  
 # --u clone username			- The user cloning from gold master repository
 # --p clone password 			- The password of the user cloning from gold master repository
 # --U gitHOST				- The git url e.g https://github.com
+# --command					[create] [delete]
 
-
-
-goldUser=
+ 
 patternName=
-componentType=
 componentName=
-cloneUser=
-clonePassword=
-scmtype=
+scmtype="gitblit"
 gitHOST=
 gitPort=
-gitURLPattern=
-gitURLComponent=
 CIUser="aubuilddsa"
-destFolder="tmp"
 jenkinsHost=
 jenkinsPort=
-
+command=
 
 # Do user input function
 
@@ -38,92 +30,97 @@ usage: $0 options
 OPTIONS:
 
 OPTIONS:
-	-g gold repository owner 	- The owner of gold master repository
-	-P patternName			- Name of the gold master repository
-	-t componentType		- Type of the component. Possible values [iib] [zconnect] [apic]
-	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
-	-u clone username		- The user cloning from gold master repository
-	-p clone password		- The password of the user cloning from gold master repository
-	-U githost			- The git url e.g [github.com] [localhost]
-	-O gitPort			- Git port
-	-S scmtype			- scmtype type [gitblit] [stash]
-	-JU JenkinsUser			- Jenkins User
-	-JP JenkinsPassword		- JenkinsPassword
-    	-JH jenkinsHost			- Jinkins Hostname
-	-JP jenkinsPort			- Jenkins Port
+	-h Help	
+	-p patternName				- Name of the gold master repository
+	-c componentName			- Name of the new component.This value will be used to create target cloned repository  
+	-g githost					- The git url e.g [github.com] [localhost]
+	-o gitPort					- Git port
+	-j JenkinsUser				- Jenkins User
+	-k JenkinsPassword			- JenkinsPassword
+   	-l jenkinsHost				- Jinkins Hostname
+	-m jenkinsPort				- Jenkins Port
+	-n command					- [create] [delete]
 EOF
 }
 
 
-
-
-function createJenkinsJob()
+function createJob()
 {
+componentType=${patternName%/*}
 
 if [ "${scmtype}"	==	"gitblit"	]; then	
-
-	gitURLComponent="https://${cloneUser}@${gitHOST}:${gitPort}/r/${cloneUser}/${componentName}.git"
+   
+	gitURLComponent="ssh://${CIUser}@${gitHOST}:${gitPort}/${componentType}/${componentName}.git" 
 fi
+templatesrc="../templates"
 
-jenkins_template="../templates/${componentType}_jenkins_template.xml"
+cp -rp ${templatesrc} /tmp
+ 
+templatelocation="/tmp/templates"
 
-replace_quote=$(printf '%s' "$gitURLComponent" | sed 's/[#\]/\\\-/g')
+jenkins_template="${templatelocation}/jenkinsjobconfig.xml"
 
-perl -pi -e "s#SCMURL#${replace_quote}#g" ${jenkins_template}
+perl -pi -e "s#SCMURL#ssh://${CIUser}\@${gitHOST}:${gitPort}/${componentType}/${componentName}.git#g" ${jenkins_template}
 
+curl --user "$jenkinsUser:$jenkinsPassword" -X POST -H "Content-Type:application/xml" -d "@${jenkins_template}" "http://${jenkinsHost}:${jenkinsPort}/createItem?name=${componentName}" 
 
-curl --user $jenkinsUser:$jenkinsPassword -X POST -H "Content-Type:application/xml" -d @${jenkins_template} "http://${jenkinsHost}:${jenkinsPort}/createItem?name=${componentName}" 
+}
 
+function deleteJob()
+{
+componentType=${patternName%/*}
+
+curl --user "$jenkinsUser:$jenkinsPassword" -X POST "http://${jenkinsHost}:${jenkinsPort}/job/${componentName}/doDelete"
+}
+
+function executeCommands(){
+case $command in
+   create)
+   	createJob
+;;
+   delete)
+   	deleteJob
+;;
+   esac
 }
 
 
 function parseParameters() {
-	while getopts "g:P:t:c:u:p:U:O:S:JU:JP:JH:JO:" OPTION
+	while getopts "h:p:c:g:o:j:k:l:m:n:" OPTION
 	do
 	     case $OPTION in
 	        h)
-	             usage
+	         usage
 	             exit 1
 	             ;;
-        	g)
-	            goldUser=$OPTARG
-	             ;;
-		P)
+			p)
 	            patternName=$OPTARG
-	             ;;
-	        t)
-	            componentType=$OPTARG
 	             ;;
 	        c)
 	            componentName=$OPTARG
 	             ;;
-	        u)
-	            cloneUser=$OPTARG
-	             ;;
-	        p)
-	            clonePassword=$OPTARG
-	             ;;
-		U)
+			g)
 	            gitHOST=$OPTARG
 	             ;;
-	        O)
+	        o)
 	            gitPort=$OPTARG 
 	             ;;    	   
-	        S)
-	            scmtype=$OPTARG
-	             ;;
-	        JU)  
-		    jenkinsUser=$OPTARG
-		    ;;
-	        JP)  
-		    jenkinsPassword=$OPTARG
-		    ;;
-	        JH)  
-		    jenkinsHost=$OPTARG
-		    ;;
-                JO)
-		    jenkinsPort=$OPTARG
-		    ;;		   	 
+	        j)  
+		    	jenkinsUser=$OPTARG
+		  	 	;;
+	        k)  
+		  		jenkinsPassword=$OPTARG
+		   		;;
+	        l)  
+		    	jenkinsHost=$OPTARG
+		    	;;
+            m)
+		   		jenkinsPort=$OPTARG
+		    	;;		   	 
+            n)
+		    	command=$OPTARG
+		    	;;		   	 
+		
 	        ?)
 	             usage
 	             exit
@@ -132,9 +129,9 @@ function parseParameters() {
 	done
 	
 	# ensure required params are not blank
-	echo "componentName=$componentName,componentType=$componentType,cloneUser=$cloneUser,gitHOST=${gitHOST},gitPort=${gitPort},scmtype=${scmtype},jenkinsHost=${jenkinsHost},jenkinsPort=${jenkinsPort}"
+        echo "componentName=${componentName},gitHOST=${gitHOST},gitPort=${gitPort},jenkinsHost=${jenkinsHost},jenkinsPort=${jenkinsPort};command=${command}"	
 	
-	if [[ -z $goldUser ]] || [[ -z $patternName ]] || [[ -z $componentType ]] || [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmtype ]] || [[ -z $jenkinsUser ]] || [[ -z $jenkinsPassword ]] || [[ -z $jenkinsHost ]] || [[ -z $jenkinsPort ]] 
+	if [[ -z $patternName ]] || [[ -z $componentName ]] ||  [[ -z $gitHOST ]] || [[ -z $jenkinsUser ]] || [[ -z $jenkinsPassword ]] || [[ -z $jenkinsHost ]] || [[ -z $jenkinsPort ]] || [[ -z $command ]];
 	then
 		usage
 		exit 1
@@ -143,8 +140,8 @@ function parseParameters() {
 
 # start of main program
 
-parseParameters $@
+parseParameters "$@"
 
-createJenkinsJob
+executeCommands
 
 exit 0

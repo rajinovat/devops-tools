@@ -1,0 +1,100 @@
+ {
+            "application": "##componentName##-App",
+            "name": "Undeploy",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "46ac979e43d41285def40693ed02bd",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "10841b5f9449fc83c52c7037a1887e",
+                        "from": "46ac979e43d41285def40693ed02bd",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "10841b5f9449fc83c52c7037a1887e",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    },
+                    {
+                        "name": "46ac979e43d41285def40693ed02bd",
+                        "x": -100,
+                        "y": 230,
+                        "h": 50,
+                        "w": 280
+                    }
+                ],
+                "type": "graph",
+                "name": "30f8628d-2ef7-4121-af09-794d479beb30",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "10841b5f9449fc83c52c7037a1887e",
+                        "children": []
+                    },
+                    {
+                        "name": "46ac979e43d41285def40693ed02bd",
+                        "componentTag": {
+                            "id": "038a7967-a02d-4309-8678-7379bef9f4db",
+                            "name": "api",
+                            "color": "#FFCF01",
+                            "description": "",
+                            "objectType": "Component"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Undeploy"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [{
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            }],
+                            "type": "componentEnvironmentIterator",
+                            "name": "f86e32f14336fe4bcce01efe4db324",
+                            "children": [{
+                                "status": "Active",
+                                "selectionType": "ALL_EXISTING",
+                                "type": "uninstallAllVersionsIterator",
+                                "name": "5998e2d4c8f90eacc06d7b2fd3a4f3",
+                                "children": [{
+                                    "componentProcessName": "Undeploy",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Undeploy"},
+                                    "type": "componentProcess",
+                                    "name": "Uninstall",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [],
+            "versionPresets": []
+    }	

@@ -4,10 +4,10 @@
   "importAutomatically": true,
   "useVfs": true,
   "defaultVersionType": "FULL",
-  "templateName": "##componentType##_component_template",
+  "templateName": "##componentType##-component-template",
   "sourceConfigPlugin": "Artifactory",
   "properties": {
-  "ArtifactoryComponentProperties\/artifactId":"##componentName##-app",
+  "ArtifactoryComponentProperties\/artifactId":"##componentName##",
   "ArtifactoryComponentProperties\/groupId":"com.anz"
       }
 }

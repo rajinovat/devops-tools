@@ -1,0 +1,379 @@
+{
+    "securityResourceId": "85df2251-5da6-4e62-b873-3ed5012e47ef",
+    "path": "componentTemplates\/201294cf-e0a4-497d-8181-620b26b78ed7",
+    "name": "apic-component-template",
+    "description": "",
+    "ignoreQualifiers": 0,
+    "componentType": "STANDARD",
+    "tags": [{
+        "id": "038a7967-a02d-4309-8678-7379bef9f4db",
+        "name": "api",
+        "color": "#FFCF01",
+        "description": "",
+        "objectType": "Component"
+    }],
+    "sourceConfigPluginName": "Maven",
+    "active": true,
+    "sourceConfigProperties": [],
+    "envPropDefs": [],
+    "resPropDefs": [],
+    "propDefs": [
+        {
+            "name": "apic_username",
+            "label": "apic_username",
+            "pattern": "",
+            "type": "TEXT",
+            "value": "goyalradmin",
+            "required": true,
+            "description": "",
+            "placeholder": ""
+        },
+        {
+            "name": "apic_password",
+            "label": "apic_password",
+            "pattern": "",
+            "type": "TEXT",
+     		"secure": false,
+		"value": "cream12#",
+            "required": true,
+            "description": "API Connect Password",
+            "placeholder": ""
+        }
+    ],
+    "properties": [],
+    "processes": [
+        {
+            "name": "Deploy",
+            "description": "Deploy",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "ADD",
+            "status": "Active",
+            "configActionType": "ADD",
+            "active": true,
+            "path": "componentTemplates\/201294cf-e0a4-497d-8181-620b26b78ed7\/processes\/3dc2a731-1153-4bbc-8780-b3f8cfd9e09e",
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "62c7823145708e83feefca186cf0b4",
+                        "from": "Upload Catalog API Config",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Download Artifact",
+                        "from": "Clean Up",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Unzip Assembly",
+                        "from": "Download Artifact",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Clean Up",
+                        "from": "2600d6029ef2668a86ebff10ac6040",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Install API",
+                        "from": "Unzip Assembly",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "Upload Catalog API Config",
+                        "from": "Unzip Assembly",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "bb3ed4d24fd0d1a34b28ba3b1d6df6",
+                        "from": "dc1eab34886672e989847019af3612",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "62c7823145708e83feefca186cf0b4",
+                        "from": "Install API",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "dc1eab34886672e989847019af3612",
+                        "from": "62c7823145708e83feefca186cf0b4",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "2600d6029ef2668a86ebff10ac6040",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "bb3ed4d24fd0d1a34b28ba3b1d6df6",
+                        "x": -17,
+                        "y": 750,
+                        "h": 50,
+                        "w": 90
+                    },
+                    {
+                        "name": "Download Artifact",
+                        "x": -112,
+                        "y": 280,
+                        "h": 50,
+                        "w": 310
+                    },
+                    {
+                        "name": "Install API",
+                        "x": -232,
+                        "y": 540,
+                        "h": 50,
+                        "w": 190
+                    },
+                    {
+                        "name": "Upload Catalog API Config",
+                        "x": 28,
+                        "y": 540,
+                        "h": 50,
+                        "w": 360
+                    },
+                    {
+                        "name": "dc1eab34886672e989847019af3612",
+                        "x": -432,
+                        "y": 680,
+                        "h": 50,
+                        "w": 270
+                    },
+                    {
+                        "name": "Unzip Assembly",
+                        "x": -72,
+                        "y": 410,
+                        "h": 50,
+                        "w": 230
+                    },
+                    {
+                        "name": "2600d6029ef2668a86ebff10ac6040",
+                        "x": -342,
+                        "y": 80,
+                        "h": 50,
+                        "w": 260
+                    },
+                    {
+                        "name": "Clean Up",
+                        "x": -112,
+                        "y": 160,
+                        "h": 50,
+                        "w": 310
+                    },
+                    {
+                        "name": "62c7823145708e83feefca186cf0b4",
+                        "x": -22,
+                        "y": 645,
+                        "h": 50,
+                        "w": 100
+                    }
+                ],
+                "type": "graph",
+                "name": "5c9e240d-6115-49d4-8033-ecb18f442c58",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "bb3ed4d24fd0d1a34b28ba3b1d6df6",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "commandName": "Unzip",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 43,
+                        "properties": {
+                            "dir": ".\/${p:version.name}",
+                            "zip": "*",
+                            "includes": "**\/*",
+                            "excludes": "",
+                            "overwrite": "false"
+                        },
+                        "type": "plugin",
+                        "name": "Unzip Assembly",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "commandName": "Download Artifacts",
+                        "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                        "pluginVersion": 26,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "artifactSetBaseDir": "",
+                            "fileIncludePatterns": "**\/*",
+                            "fileExcludePatterns": "",
+                            "syncMode": "true",
+                            "fullVerification": "true",
+                            "setFileExecuteBits": "false",
+                            "verifyFileIntegrity": "false",
+                            "versionId": "${p:version.id}",
+                            "serverUrl": "${p:server.url}",
+                            "compId": "${p:component.id}",
+                            "resId": "${p:resource.id}",
+                            "charset": "",
+                            "label": ""
+                        },
+                        "type": "plugin",
+                        "name": "Download Artifact",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "commandName": "Shell",
+                        "pluginName": "Shell",
+                        "pluginVersion": 6,
+                        "properties": {
+                            "directoryOffset": ".",
+                            "shellInterpreter": "",
+                            "scriptBody": "ls -al\ncd ${p:version.name}\nls -al\nchmod 755 install.sh\n.\/install.sh -m ${p:resource\/apic_url} -c ${p:resource\/apic_catalog} -u ${p:component\/apic_username} -p ${p:component\/apic_password}",
+                            "runAsDaemon": "false",
+                            "outputFile": ""
+                        },
+                        "type": "plugin",
+                        "name": "Install API",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": false,
+                        "impersonationUseSudo": false,
+                        "commandName": "Delete Files and Directories",
+                        "pluginName": "File Utils",
+                        "pluginVersion": 43,
+                        "properties": {
+                            "baseDir": ".",
+                            "includes": "${p:version.name}\/*\n${p:version.name}\n${p:component\/MavenComponentProperties\/artifactId}-${p:version.name}-package.zip",
+                            "excludes": "",
+                            "followSymlinks": "false",
+                            "caseSensitive": "true"
+                        },
+                        "type": "plugin",
+                        "name": "Clean Up",
+                        "children": []
+                    },
+                    {
+                        "allowFailure": false,
+                        "useImpersonation": false,
+                        "showHidden": true,
+                        "impersonationUseSudo": false,
+                        "workingDir": "${p:resource\/work.dir}\/${p:component.name}\/${p:version.name}",
+                        "commandName": "Upload from Definition",
+                        "pluginName": "DataPower",
+                        "pluginVersion": 8,
+                        "properties": {
+                            "domainName": "${p:resource\/datapower_domain}",
+                            "definitionFile": "${p:resource\/work.dir}\/${p:component.name}\/${p:version.name}\/dcm-upload-definition.xml",
+                            "hostname": "${p:resource\/datapower_ip}",
+                            "uid": "${p:resource\/datapower_userid}",
+                            "pwd":\94\94,
+                            "portXMI": "${p:resource\/datapower_port}",
+                            "environment": "${p:resource\/apic_catalog}",
+                            "addlProperties": "deploy.dir=${p:resource\/work.dir}\/${p:component.name}\/${p:version.name}"
+                        },
+                        "type": "plugin",
+                        "name": "Upload Catalog API Config",
+                        "children": []
+                    },
+                    {
+                        "type": "join",
+                        "name": "62c7823145708e83feefca186cf0b4",
+                        "children": []
+                    },
+                    {
+                        "lockName": "${p:component.name}",
+                        "type": "acquireLock",
+                        "name": "2600d6029ef2668a86ebff10ac6040",
+                        "children": []
+                    },
+                    {
+                        "lockName": "${p:component.name}",
+                        "type": "releaseLock",
+                        "name": "dc1eab34886672e989847019af3612",
+                        "children": []
+                    }
+                ]
+            }
+        },
+        {
+            "name": "Undeploy",
+            "description": "",
+            "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+            "takesVersion": true,
+            "inventoryActionType": "REMOVE",
+            "status": "Active",
+            "active": true,
+            "path": "componentTemplates\/201294cf-e0a4-497d-8181-620b26b78ed7\/processes\/98dd2122-2aa4-4de6-b02f-9d3a30649e3f",
+            "propDefs": [],
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "edeedad93162993c63e2cd5f853310",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "5f4796fcd7bb404f91c24c47fa603c",
+                        "from": "edeedad93162993c63e2cd5f853310",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "5f4796fcd7bb404f91c24c47fa603c",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    },
+                    {
+                        "name": "edeedad93162993c63e2cd5f853310",
+                        "x": -55,
+                        "y": 206,
+                        "h": 50,
+                        "w": 190
+                    }
+                ],
+                "type": "graph",
+                "name": "824f96ab-262c-4932-b287-22ebacd941a7",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "5f4796fcd7bb404f91c24c47fa603c",
+                        "children": []
+                    },
+                    {
+                        "status": "SUCCESS",
+                        "type": "setStatus",
+                        "name": "edeedad93162993c63e2cd5f853310",
+                        "children": []
+                    }
+                ]
+            }
+        }
+    ],
+    "genericProcesses": [],
+    "teamMappings": []
+}

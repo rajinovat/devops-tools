@@ -1,0 +1,6 @@
+{
+  "name": "##componentName##-App",
+  "description": "##componentName## Application",
+  "notificationScheme": "Default Notification Scheme",
+  "enforceCompleteSnapshots": "false"
+}

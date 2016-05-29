@@ -16,13 +16,14 @@ componentType=
 componentName=
 cloneUser=
 clonePassword=
-scmtype=
+scmtype="gitblit"
 gitHOST=
 gitPort=
 gitURLPattern=
 gitURLComponent=
 CIUser="aubuilddsa"
 destFolder="tmp"
+command=
 
 # Do user input function
 
@@ -31,66 +32,118 @@ cat << EOF
 usage: $0 options
 
 OPTIONS:
+    -h Help
 	-g gold repository owner 	- The owner of gold master repository
-	-P patternName			- Name of the gold master repository
-	-t componentType		- Type of the component. Possible values [iib] [zconnect] [apic]
-	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
-	-u clone username		- The user cloning from gold master repository
-	-p clone password		- The password of the user cloning from gold master repository
-	-U githost			- The git url e.g [github.com] [localhost]
-	-O gitPort			- Git port
-	-S scmtype			- scmtype type [gitblit] [stash]
-    	-J jenkinsHost			- Jinkins Hostname
-	-k jenkinsPort			- Jenkins Port
+	-p patternName				- Name of the gold master repository
+	-c componentName			- Name of the new component.This value will be used to create target cloned repository  
+	-u clone username			- The user cloning from gold master repository
+	-w clone password			- The password of the user cloning from gold master repository
+	-j githost					- The git url e.g [github.com] [localhost]
+	-k gitPort					- Git port
+	-l scmtype					- scmtype type [gitblit] [stash]
+	-m command					- [create] [delete]
 EOF
 }
 
-function createEmptyRepo()
+function createRepo()
 {
-jsonPost="\"name\": \"${cloneUser}/${componentName}.git\",\"description\": \"${componentName}\",\"owners\": [\"${CIUser}\",\"${cloneUser}\"],\"accessRestriction\": PUSH"
+componentType=${patternName%/*}
+patternOnly=${patternName##*/}
+
+jsonPost="\"name\": \"${componentType}/${componentName}.git\",\"description\": \"${componentName}\",\"owners\": [\"${CIUser}\",\"${cloneUser}\",\"master\"],\"accessRestriction\": PUSH"
 
 if [ "${scmtype}"	==	"gitblit"	]; then		
-	 curl --insecure --user ${cloneUser}:${clonePassword} -X POST -H 'content-type: application/json;' --data "{${jsonPost}}"  https://${gitHOST}:${gitPort}/rpc/?req=CREATE_REPOSITORY
+	 curl --insecure --user ${cloneUser}:${clonePassword} -X POST -H 'content-type: application/json;' --data "{${jsonPost}}"  "https://${gitHOST}:${gitPort}/rpc/?req=CREATE_REPOSITORY"
 fi
 
 }
 
-function forkGitRepo()
+function deleteRepo()
+{
+
+componentType=${patternName%/*}
+
+jsonPost="\"name\": \"${componentType}/${componentName}.git\""
+
+if [ "${scmtype}"	==	"gitblit"	]; then		
+	 curl --insecure --user ${cloneUser}:${clonePassword} -X POST -H 'content-type: application/json;' --data "{${jsonPost}}" "https://${gitHOST}:${gitPort}/rpc/?req=DELETE_REPOSITORY"
+fi
+
+}
+
+
+function forkRepo()
 {
 #Fork a git repo
 
+componentType=${patternName%/*}
+patternOnly=${patternName##*/}
 
 if [ "${componentType}"	 ==  "iib"	]; then	
 
-	patternName="${patternName}-parent"
+	patternOnly="${patternOnly}-parent"
 	componentName="${componentName}-parent"
 fi
 
-
 git config --global http.sslVerify false
 
-gitURLPattern="https://${goldUser}@${gitHOST}:${gitPort}/r/${componentType}/${patternName}.git"
+gitURLPattern="https://${goldUser}@${gitHOST}:${gitPort}/r/${componentType}/${patternOnly}.git"
 
-gitURLComponent="https://${cloneUser}@${gitHOST}:${gitPort}/r/${cloneUser}/${componentName}.git"
+gitURLComponent="https://${cloneUser}@${gitHOST}:${gitPort}/r/${componentType}/${componentName}.git"
 
-rm -rf "/${destFolder}/${patternName}/${destFolder}/${componentName}"
+patternCloneDir="/${destFolder}/${patternOnly}"
+componentCloneDir="/${destFolder}/${componentName}"
 
-git clone "${gitURLPattern}" /${destFolder}/${patternName}
 
-git clone "${gitURLComponent}" /${destFolder}/${componentName}
+if [ -d "$patternCloneDir" ]; then
+ rm -rf ${patternCloneDir}
+fi 
 
-cd "/${destFolder}/${patternName}"|| rm -rf ".git";
+if [ -d "$componentCloneDir" ]; then
+ rm -rf ${componentCloneDir}
+fi 
 
-cp -rp * /*${destFolder}*/*${componentName}*||cd /${destFolder}/${componentName}
+mkdir -p ${patternCloneDir}
+mkdir -p ${componentCloneDir}
 
-git add *;git commit -m "Initial Clone";git config --global push.default simple
+git clone "${gitURLPattern}" ${patternCloneDir}
 
-git push --set-upstream "https://${cloneUser}:${clonePassword}@${gitHOST}:${gitPort}/r/${cloneUser}/${componentName}.git" master
+git clone "${gitURLComponent}" ${componentCloneDir}
+
+if [ -d "$patternCloneDir" ]; then
+	 cd "${patternCloneDir}"
+	 rm -rf ".git"
+	 cp -rp * ${componentCloneDir}
+	 cd ${componentCloneDir}
+	 git add *
+	 git commit -m "Initial Commit"
+	 git config --global push.default simple
+	 git push --set-upstream "https://${cloneUser}:${clonePassword}@${gitHOST}:${gitPort}/r/${componentType}/${componentName}.git" master
+	 echo "Git fork from ${patternName} repository success!!"
+	 rm -rf ${patternCloneDir}
+	 rm -rf ${componentCloneDir}
+else
+  	echo "Git fork from ${patternName} repository failed!!"
+fi 
+
+
 
 }
 
+function executeCommands(){
+case $command in
+   create)
+   	createRepo
+   	forkRepo
+;;
+   delete)
+   	deleteRepo
+;;
+   esac
+}
+
 function parseParameters() {
-	while getopts "g:P:t:c:u:p:U:O:S:" OPTION
+	while getopts "h:g:p:c:u:w:j:k:l:m:" OPTION
 	do
 	     case $OPTION in
 	        h)
@@ -100,11 +153,8 @@ function parseParameters() {
 	        g)
 	            goldUser=$OPTARG
 	             ;;
-			P)
+			p)
 	            patternName=$OPTARG
-	             ;;
-	        t)
-	            componentType=$OPTARG
 	             ;;
 	        c)
 	            componentName=$OPTARG
@@ -112,18 +162,20 @@ function parseParameters() {
 	        u)
 	            cloneUser=$OPTARG
 	             ;;
-	        p)
+	        w)
 	            clonePassword=$OPTARG
 	             ;;
-		U)
+			j)
 	            gitHOST=$OPTARG
 	             ;;
-	        O)
+	        k)
 	            gitPort=$OPTARG 
 	             ;;    	   
-	        S)
+	        l)
 	            scmtype=$OPTARG
 	             ;;
+	        m)  command=$OPTARG
+	        	;;     
 	        ?)
 	             usage
 	             exit
@@ -132,9 +184,9 @@ function parseParameters() {
 	done
 	
 	# ensure required params are not blank
-	echo "goldUser=$goldUser,patternName=$patternName,componentType=$componentType,componentName=$componentName,cloneUser=$cloneUser,clonePassword=$clonePassword,gitHOST=${gitHOST},gitPort=${gitPort},scmtype=${scmtype}"
+	echo "goldUser=$goldUser,patternName=$patternName,componentName=$componentName,cloneUser=$cloneUser,clonePassword=$clonePassword,gitHOST=${gitHOST},gitPort=${gitPort},scmtype=${scmtype},command=${command}"
 	
-	if [[ -z $goldUser ]] || [[ -z $patternName ]] || [[ -z $componentType ]] || [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmtype ]] 
+	if [[ -z $goldUser ]] || [[ -z $patternName ]] ||  [[ -z $componentName ]] || [[ -z $cloneUser ]] || [[ -z $clonePassword ]] || [[ -z $gitHOST ]] || [[ -z $scmtype ]] || [[ -z $command ]]
 	then
 		usage
 		exit 1
@@ -144,8 +196,7 @@ function parseParameters() {
 # start of main program
 
 parseParameters "$@"
-createEmptyRepo
-forkGitRepo
 
+executeCommands
 
 exit 0
