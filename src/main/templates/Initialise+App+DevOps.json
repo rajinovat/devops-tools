@@ -1,0 +1,2859 @@
+{
+    "name": "Initialise App DevOps",
+    "description": "",
+    "enforceCompleteSnapshots": false,
+    "propSheet": {"properties": []},
+    "templatePropSheet": {
+        "name": "template",
+        "properties": []
+    },
+    "components": [
+        {
+            "name": "Initialise GIT1",
+            "description": "",
+            "created": 1463234561647,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": true,
+            "useVfs": true,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "sourceConfigPluginName": "Artifactory",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "ArtifactoryComponentProperties",
+                    "properties": [
+                        {
+                            "name": "artifactId",
+                            "value": "devops-tools",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "copyCount",
+                            "value": "5",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extension",
+                            "value": ".zip",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extensions",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "groupId",
+                            "value": "com\/anz",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "nuGetPackage",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "nuGetVersion",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "password",
+                            "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128key4tts|XyCS\/RMyCZjcQvyVxPWphQ==|v9Lis7z58UDdHWK35AhyeA==}",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "repoName",
+                            "value": "ext-release-local",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "repoUrl",
+                            "value": "http:\/\/localhost:8081\/artifactory\/",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "saveFileExecuteBits",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "separator",
+                            "value": ".",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "user",
+                            "value": "admin",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "versionPattern",
+                            "value": ".*",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                },
+                {
+                    "name": "custom",
+                    "properties": []
+                },
+                {
+                    "name": "template",
+                    "properties": []
+                }
+            ]},
+            "processes": [
+                {
+                    "name": "Deploy",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "components\/f27bc6e0-e794-48e8-a629-73972f133db0\/processes\/2f907168-fea9-4ee4-83ce-7edc5241a0c9",
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "Download Artifacts",
+                                "type": "ALWAYS",
+                                "value": ""
+                            },
+                            {
+                                "to": "79e06c97bbe192d10b39ea88c2865b",
+                                "from": "Cleanup",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Cleanup",
+                                "from": "Initialise GIT",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Initialise GIT",
+                                "from": "Unzip",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Unzip",
+                                "from": "Download Artifacts",
+                                "type": "SUCCESS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "Cleanup",
+                                "x": -141,
+                                "y": 400,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "Unzip",
+                                "x": -45,
+                                "y": 170,
+                                "h": 50,
+                                "w": 170
+                            },
+                            {
+                                "name": "Download Artifacts",
+                                "x": -80,
+                                "y": 80,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "x": -31,
+                                "y": 530,
+                                "h": 50,
+                                "w": 90
+                            },
+                            {
+                                "name": "Initialise GIT",
+                                "x": -105,
+                                "y": 290,
+                                "h": 50,
+                                "w": 210
+                            }
+                        ],
+                        "type": "graph",
+                        "name": "a3432f11-e72e-4c4f-bfef-d8d9658f59f5",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Download Artifacts",
+                                "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                "pluginVersion": 26,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "artifactSetBaseDir": "",
+                                    "fileIncludePatterns": "**\/*",
+                                    "fileExcludePatterns": "",
+                                    "syncMode": "true",
+                                    "fullVerification": "true",
+                                    "setFileExecuteBits": "false",
+                                    "verifyFileIntegrity": "false",
+                                    "versionId": "${p:version.id}",
+                                    "serverUrl": "${p:server.url}",
+                                    "compId": "${p:component.id}",
+                                    "resId": "${p:resource.id}",
+                                    "charset": "",
+                                    "label": ""
+                                },
+                                "type": "plugin",
+                                "name": "Download Artifacts",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "chmod 755 gitsetup.sh\nsh gitsetup.sh -g ${p:goldUser} -p ${p:patternName}  -c ${p:componentName} -u ${p:cloneUser} -w ${p:clonePassword} -j ${p:gitHOST} -k ${p:gitPort} -l ${p:scmtype} -m create",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Initialise GIT",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "unzip -o *",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Unzip",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Delete Files and Directories",
+                                "pluginName": "File Utils",
+                                "pluginVersion": 43,
+                                "properties": {
+                                    "baseDir": ".",
+                                    "includes": "**\/*",
+                                    "excludes": "",
+                                    "followSymlinks": "false",
+                                    "caseSensitive": "true"
+                                },
+                                "type": "plugin",
+                                "name": "Cleanup",
+                                "children": []
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "UnDeploy",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "components\/f27bc6e0-e794-48e8-a629-73972f133db0\/processes\/e77c6fa5-57bd-4fc9-83b2-bcf7c4469ebf",
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "Cleanup",
+                                "from": "DeleteRepository-${p:componentName}",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "79e06c97bbe192d10b39ea88c2865b",
+                                "from": "Cleanup",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "DeleteRepository-${p:componentName}",
+                                "from": "Unzip",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Unzip",
+                                "from": "Download Artifacts",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Download Artifacts",
+                                "type": "ALWAYS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "DeleteRepository-${p:componentName}",
+                                "x": -105,
+                                "y": 290,
+                                "h": 50,
+                                "w": 360
+                            },
+                            {
+                                "name": "Unzip",
+                                "x": -45,
+                                "y": 170,
+                                "h": 50,
+                                "w": 170
+                            },
+                            {
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "x": -31,
+                                "y": 530,
+                                "h": 50,
+                                "w": 90
+                            },
+                            {
+                                "name": "Cleanup",
+                                "x": -141,
+                                "y": 400,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "Download Artifacts",
+                                "x": -80,
+                                "y": 80,
+                                "h": 50,
+                                "w": 320
+                            }
+                        ],
+                        "type": "graph",
+                        "name": "2142d368-62c9-46fd-a7c4-c7b475e3fcd0",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Download Artifacts",
+                                "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                "pluginVersion": 26,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "artifactSetBaseDir": "",
+                                    "fileIncludePatterns": "**\/*",
+                                    "fileExcludePatterns": "",
+                                    "syncMode": "true",
+                                    "fullVerification": "true",
+                                    "setFileExecuteBits": "false",
+                                    "verifyFileIntegrity": "false",
+                                    "versionId": "${p:version.id}",
+                                    "serverUrl": "${p:server.url}",
+                                    "compId": "${p:component.id}",
+                                    "resId": "${p:resource.id}",
+                                    "charset": "",
+                                    "label": ""
+                                },
+                                "type": "plugin",
+                                "name": "Download Artifacts",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "chmod 755 gitsetup.sh\nsh gitsetup.sh  -p ${p:patternName} -c ${p:componentName} -u ${p:cloneUser} -w ${p:clonePassword} -j ${p:gitHOST} -k ${p:gitPort} -m delete",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "DeleteRepository-${p:componentName}",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "unzip -o *",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Unzip",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Delete Files and Directories",
+                                "pluginName": "File Utils",
+                                "pluginVersion": 43,
+                                "properties": {
+                                    "baseDir": ".",
+                                    "includes": "**\/*",
+                                    "excludes": "",
+                                    "followSymlinks": "false",
+                                    "caseSensitive": "true"
+                                },
+                                "type": "plugin",
+                                "name": "Cleanup",
+                                "children": []
+                            }
+                        ]
+                    }
+                }
+            ],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": [
+                {
+                    "id": "89bd0569-7d08-4c11-a628-e9c12c291cc3",
+                    "name": "GIT",
+                    "color": "#00B2EF",
+                    "description": "",
+                    "objectType": "Component"
+                },
+                {
+                    "id": "cf482541-911d-417c-8f02-3458fd670e66",
+                    "name": "DevOps",
+                    "color": "#AB1A86",
+                    "description": "",
+                    "objectType": "Component"
+                }
+            ]
+        },
+        {
+            "name": "Initialise Jenkins",
+            "description": "",
+            "created": 1463305099949,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": true,
+            "useVfs": true,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "sourceConfigPluginName": "Artifactory",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "custom",
+                    "properties": []
+                },
+                {
+                    "name": "ArtifactoryComponentProperties",
+                    "properties": [
+                        {
+                            "name": "artifactId",
+                            "value": "devops-tools",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "copyCount",
+                            "value": "5",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extension",
+                            "value": ".zip",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extensions",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "groupId",
+                            "value": "com\/anz",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "nuGetPackage",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "nuGetVersion",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "password",
+                            "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128key4tts|wEbw5FtTivbCxm5aIUHFXw==|QaYnaSnCu3BlvgtvhbrBdQ==}",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "repoName",
+                            "value": "ext-release-local",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "repoUrl",
+                            "value": "http:\/\/localhost:8081\/artifactory\/",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "saveFileExecuteBits",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "separator",
+                            "value": ".",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "user",
+                            "value": "admin",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "versionPattern",
+                            "value": ".*",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                },
+                {
+                    "name": "template",
+                    "properties": []
+                }
+            ]},
+            "processes": [
+                {
+                    "name": "Deploy",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "components\/37845f3b-5fe6-4a59-bbb7-c8cd120f1b1a\/processes\/369978ae-7c86-400f-abdb-2edaaac320e7",
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "79e06c97bbe192d10b39ea88c2865b",
+                                "from": "Cleanup",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Initialise Jenkins",
+                                "from": "Unzip",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Cleanup",
+                                "from": "Initialise Jenkins",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Unzip",
+                                "from": "Download Artifacts",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Download Artifacts",
+                                "type": "ALWAYS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "Unzip",
+                                "x": -45,
+                                "y": 170,
+                                "h": 50,
+                                "w": 170
+                            },
+                            {
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "x": -31,
+                                "y": 530,
+                                "h": 50,
+                                "w": 90
+                            },
+                            {
+                                "name": "Cleanup",
+                                "x": -141,
+                                "y": 400,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "Download Artifacts",
+                                "x": -80,
+                                "y": 80,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "Initialise Jenkins",
+                                "x": -105,
+                                "y": 290,
+                                "h": 50,
+                                "w": 230
+                            }
+                        ],
+                        "type": "graph",
+                        "name": "3c66993a-7001-4adb-9e60-673092212718",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Download Artifacts",
+                                "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                "pluginVersion": 26,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "artifactSetBaseDir": "",
+                                    "fileIncludePatterns": "**\/*",
+                                    "fileExcludePatterns": "",
+                                    "syncMode": "true",
+                                    "fullVerification": "true",
+                                    "setFileExecuteBits": "false",
+                                    "verifyFileIntegrity": "false",
+                                    "versionId": "${p:version.id}",
+                                    "serverUrl": "${p:server.url}",
+                                    "compId": "${p:component.id}",
+                                    "resId": "${p:resource.id}",
+                                    "charset": "",
+                                    "label": ""
+                                },
+                                "type": "plugin",
+                                "name": "Download Artifacts",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "chmod 755 gitsetup.sh\nsh jenkinssetup.sh  -p ${p:patternName}  -c ${p:componentName} -g ${p:gitHOST} -o 29418 -j ${p:jenkinsUser} -k ${p:jenkinsPassword} -l ${p:jenkinsHost} -m ${p:jenkinsPort} -n create",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Initialise Jenkins",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "unzip -o *",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Unzip",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Delete Files and Directories",
+                                "pluginName": "File Utils",
+                                "pluginVersion": 43,
+                                "properties": {
+                                    "baseDir": ".",
+                                    "includes": "**\/*",
+                                    "excludes": "",
+                                    "followSymlinks": "false",
+                                    "caseSensitive": "true"
+                                },
+                                "type": "plugin",
+                                "name": "Cleanup",
+                                "children": []
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "UnDeploy",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "components\/37845f3b-5fe6-4a59-bbb7-c8cd120f1b1a\/processes\/02f08481-ca62-4f6d-aed1-29f4be8c4282",
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "Unzip",
+                                "from": "Download Artifacts",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Download Artifacts",
+                                "type": "ALWAYS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Cleanup",
+                                "from": "Delete Jenkins Job",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Delete Jenkins Job",
+                                "from": "Unzip",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "79e06c97bbe192d10b39ea88c2865b",
+                                "from": "Cleanup",
+                                "type": "SUCCESS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "x": -31,
+                                "y": 530,
+                                "h": 50,
+                                "w": 90
+                            },
+                            {
+                                "name": "Delete Jenkins Job",
+                                "x": -105,
+                                "y": 290,
+                                "h": 50,
+                                "w": 240
+                            },
+                            {
+                                "name": "Cleanup",
+                                "x": -141,
+                                "y": 400,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "Download Artifacts",
+                                "x": -80,
+                                "y": 80,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "Unzip",
+                                "x": -45,
+                                "y": 170,
+                                "h": 50,
+                                "w": 170
+                            }
+                        ],
+                        "type": "graph",
+                        "name": "be13ea39-a39a-4c79-9922-9ac802ca66e8",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Download Artifacts",
+                                "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                "pluginVersion": 26,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "artifactSetBaseDir": "",
+                                    "fileIncludePatterns": "**\/*",
+                                    "fileExcludePatterns": "",
+                                    "syncMode": "true",
+                                    "fullVerification": "true",
+                                    "setFileExecuteBits": "false",
+                                    "verifyFileIntegrity": "false",
+                                    "versionId": "${p:version.id}",
+                                    "serverUrl": "${p:server.url}",
+                                    "compId": "${p:component.id}",
+                                    "resId": "${p:resource.id}",
+                                    "charset": "",
+                                    "label": ""
+                                },
+                                "type": "plugin",
+                                "name": "Download Artifacts",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "chmod 755 gitsetup.sh\nsh jenkinssetup.sh  -p ${p:patternName}  -c ${p:componentName} -g ${p:gitHOST} -o ${p:gitPort} -j ${p:jenkinsUser} -k ${p:jenkinsPassword} -l ${p:jenkinsHost} -m ${p:jenkinsPort} -n delete",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Delete Jenkins Job",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "unzip -o *",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Unzip",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Delete Files and Directories",
+                                "pluginName": "File Utils",
+                                "pluginVersion": 43,
+                                "properties": {
+                                    "baseDir": ".",
+                                    "includes": "**\/*",
+                                    "excludes": "",
+                                    "followSymlinks": "false",
+                                    "caseSensitive": "true"
+                                },
+                                "type": "plugin",
+                                "name": "Cleanup",
+                                "children": []
+                            }
+                        ]
+                    }
+                }
+            ],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": [
+                {
+                    "id": "1093d910-f863-49ab-bfe8-c34130ea13e9",
+                    "name": "Jenkins",
+                    "color": "#FFCF01",
+                    "description": "",
+                    "objectType": "Component"
+                },
+                {
+                    "id": "cf482541-911d-417c-8f02-3458fd670e66",
+                    "name": "DevOps",
+                    "color": "#AB1A86",
+                    "description": "",
+                    "objectType": "Component"
+                }
+            ]
+        },
+        {
+            "name": "Initialise UCD",
+            "description": "",
+            "created": 1463305118046,
+            "componentType": "STANDARD",
+            "ignoreQualifiers": 0,
+            "importAutomatically": true,
+            "useVfs": true,
+            "active": true,
+            "deleted": false,
+            "defaultVersionType": "FULL",
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "sourceConfigPluginName": "Artifactory",
+            "envPropDefs": [],
+            "resPropDefs": [],
+            "versionPropDefs": [],
+            "propSheetGroup": {"propSheets": [
+                {
+                    "name": "template",
+                    "properties": []
+                },
+                {
+                    "name": "custom",
+                    "properties": []
+                },
+                {
+                    "name": "ArtifactoryComponentProperties",
+                    "properties": [
+                        {
+                            "name": "artifactId",
+                            "value": "devops-tools",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "copyCount",
+                            "value": "5",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extension",
+                            "value": ".zip",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "extensions",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "groupId",
+                            "value": "com\/anz",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "nuGetPackage",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "nuGetVersion",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "password",
+                            "value": "crypt_v1{AES\/CBC\/PKCS5Padding|aes128key4tts|pOHOV\/8VJkQlTiZ9YWDFXQ==|LzBL4wg0M8Jv09nAVSdiCw==}",
+                            "description": "",
+                            "secure": true
+                        },
+                        {
+                            "name": "repoName",
+                            "value": "ext-release-local",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "repoUrl",
+                            "value": "http:\/\/localhost:8081\/artifactory\/",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "saveFileExecuteBits",
+                            "value": "false",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "separator",
+                            "value": ".",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "user",
+                            "value": "admin",
+                            "description": "",
+                            "secure": false
+                        },
+                        {
+                            "name": "versionPattern",
+                            "value": ".*",
+                            "description": "",
+                            "secure": false
+                        }
+                    ]
+                }
+            ]},
+            "processes": [
+                {
+                    "name": "Deploy",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "components\/a348361f-9718-4df9-81d9-1cf9bea78993\/processes\/a8ddca70-8caf-4408-a0da-d39f8ad9518d",
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "Unzip",
+                                "from": "Download Artifacts",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "79e06c97bbe192d10b39ea88c2865b",
+                                "from": "Cleanup",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Download Artifacts",
+                                "type": "ALWAYS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Initialise UCD",
+                                "from": "Unzip",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Cleanup",
+                                "from": "Initialise UCD",
+                                "type": "SUCCESS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "Download Artifacts",
+                                "x": -80,
+                                "y": 80,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "Unzip",
+                                "x": -45,
+                                "y": 170,
+                                "h": 50,
+                                "w": 170
+                            },
+                            {
+                                "name": "Cleanup",
+                                "x": -141,
+                                "y": 400,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "x": -31,
+                                "y": 530,
+                                "h": 50,
+                                "w": 90
+                            },
+                            {
+                                "name": "Initialise UCD",
+                                "x": -105,
+                                "y": 290,
+                                "h": 50,
+                                "w": 210
+                            }
+                        ],
+                        "type": "graph",
+                        "name": "9233d351-f0ea-48d4-acc8-673e99bc15b9",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Download Artifacts",
+                                "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                "pluginVersion": 26,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "artifactSetBaseDir": "",
+                                    "fileIncludePatterns": "**\/*",
+                                    "fileExcludePatterns": "",
+                                    "syncMode": "true",
+                                    "fullVerification": "true",
+                                    "setFileExecuteBits": "false",
+                                    "verifyFileIntegrity": "false",
+                                    "versionId": "${p:version.id}",
+                                    "serverUrl": "${p:server.url}",
+                                    "compId": "${p:component.id}",
+                                    "resId": "${p:resource.id}",
+                                    "charset": "",
+                                    "label": ""
+                                },
+                                "type": "plugin",
+                                "name": "Download Artifacts",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "chmod 755 gitsetup.sh\nsh ucdsetup.sh -p ${p:patternName}  -c ${p:componentName} -u ${p:ucdUser} -w ${p:ucdPassword} -s ${p:ucdHost} -o ${p:ucdPort} -m create",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Initialise UCD",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "unzip -o *",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Unzip",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Delete Files and Directories",
+                                "pluginName": "File Utils",
+                                "pluginVersion": 43,
+                                "properties": {
+                                    "baseDir": ".",
+                                    "includes": "**\/*",
+                                    "excludes": "",
+                                    "followSymlinks": "false",
+                                    "caseSensitive": "true"
+                                },
+                                "type": "plugin",
+                                "name": "Cleanup",
+                                "children": []
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "UnDeploy",
+                    "description": "",
+                    "defaultWorkingDir": "${p:resource\/work.dir}\/${p:component.name}",
+                    "takesVersion": true,
+                    "inventoryActionType": "ADD",
+                    "status": "Active",
+                    "configActionType": "ADD",
+                    "active": true,
+                    "path": "components\/a348361f-9718-4df9-81d9-1cf9bea78993\/processes\/c37f6e4c-babc-4a89-a604-7e55b79aa844",
+                    "propDefs": [],
+                    "rootActivity": {
+                        "edges": [
+                            {
+                                "to": "Cleanup",
+                                "from": "DeleteRepository-${p:componentName}",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "79e06c97bbe192d10b39ea88c2865b",
+                                "from": "Cleanup",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "DeleteRepository-${p:componentName}",
+                                "from": "Unzip",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Unzip",
+                                "from": "Download Artifacts",
+                                "type": "SUCCESS",
+                                "value": ""
+                            },
+                            {
+                                "to": "Download Artifacts",
+                                "type": "ALWAYS",
+                                "value": ""
+                            }
+                        ],
+                        "offsets": [
+                            {
+                                "name": "DeleteRepository-${p:componentName}",
+                                "x": -105,
+                                "y": 290,
+                                "h": 50,
+                                "w": 360
+                            },
+                            {
+                                "name": "Unzip",
+                                "x": -45,
+                                "y": 170,
+                                "h": 50,
+                                "w": 170
+                            },
+                            {
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "x": -31,
+                                "y": 530,
+                                "h": 50,
+                                "w": 90
+                            },
+                            {
+                                "name": "Cleanup",
+                                "x": -141,
+                                "y": 400,
+                                "h": 50,
+                                "w": 320
+                            },
+                            {
+                                "name": "Download Artifacts",
+                                "x": -80,
+                                "y": 80,
+                                "h": 50,
+                                "w": 320
+                            }
+                        ],
+                        "type": "graph",
+                        "name": "2142d368-62c9-46fd-a7c4-c7b475e3fcd0",
+                        "children": [
+                            {
+                                "type": "finish",
+                                "name": "79e06c97bbe192d10b39ea88c2865b",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Download Artifacts",
+                                "pluginName": "IBM UrbanCode Deploy Versioned File Storage",
+                                "pluginVersion": 26,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "artifactSetBaseDir": "",
+                                    "fileIncludePatterns": "**\/*",
+                                    "fileExcludePatterns": "",
+                                    "syncMode": "true",
+                                    "fullVerification": "true",
+                                    "setFileExecuteBits": "false",
+                                    "verifyFileIntegrity": "false",
+                                    "versionId": "${p:version.id}",
+                                    "serverUrl": "${p:server.url}",
+                                    "compId": "${p:component.id}",
+                                    "resId": "${p:resource.id}",
+                                    "charset": "",
+                                    "label": ""
+                                },
+                                "type": "plugin",
+                                "name": "Download Artifacts",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "chmod 755 gitsetup.sh\nsh gitsetup.sh  -p ${p:patternName} -c ${p:componentName} -u ${p:cloneUser} -w ${p:clonePassword} -j ${p:gitHOST} -k ${p:gitPort} -m delete",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "DeleteRepository-${p:componentName}",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Shell",
+                                "pluginName": "Shell",
+                                "pluginVersion": 6,
+                                "properties": {
+                                    "directoryOffset": ".",
+                                    "shellInterpreter": "",
+                                    "scriptBody": "unzip -o *",
+                                    "runAsDaemon": "false",
+                                    "outputFile": ""
+                                },
+                                "type": "plugin",
+                                "name": "Unzip",
+                                "children": []
+                            },
+                            {
+                                "allowFailure": false,
+                                "useImpersonation": false,
+                                "showHidden": false,
+                                "impersonationUseSudo": false,
+                                "commandName": "Delete Files and Directories",
+                                "pluginName": "File Utils",
+                                "pluginVersion": 43,
+                                "properties": {
+                                    "baseDir": ".",
+                                    "includes": "**\/*",
+                                    "excludes": "",
+                                    "followSymlinks": "false",
+                                    "caseSensitive": "true"
+                                },
+                                "type": "plugin",
+                                "name": "Cleanup",
+                                "children": []
+                            }
+                        ]
+                    }
+                }
+            ],
+            "configTemplates": [],
+            "genericProcesses": [],
+            "teamMappings": [],
+            "tags": [
+                {
+                    "id": "34a8c0af-aa94-4b3b-afe8-c6e4da924409",
+                    "name": "UCD",
+                    "color": "#17AF4B",
+                    "description": "",
+                    "objectType": "Component"
+                },
+                {
+                    "id": "cf482541-911d-417c-8f02-3458fd670e66",
+                    "name": "DevOps",
+                    "color": "#AB1A86",
+                    "description": "",
+                    "objectType": "Component"
+                }
+            ]
+        }
+    ],
+    "environments": [
+        {
+            "name": "CI\/CD",
+            "description": "",
+            "color": "#AB1A86",
+            "requireApprovals": false,
+            "exemptProcesses": [],
+            "lockSnapshots": false,
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "historyCleanupDaysToKeep": -1,
+            "order": 0,
+            "active": true,
+            "propSheet": {"properties": []},
+            "templatePropSheet": {
+                "name": "template",
+                "properties": []
+            },
+            "baseResources": [{
+                "path": "\/Continuous Integration and Deployment Server Profile",
+                "id": "61766776-de1f-4ccb-a3a8-3c5b0a01757e"
+            }],
+            "componentPropSheets": [
+                {
+                    "properties": [],
+                    "componentName": "Initialise GIT1"
+                },
+                {
+                    "properties": [],
+                    "componentName": "Initialise Jenkins"
+                },
+                {
+                    "properties": [],
+                    "componentName": "Initialise UCD"
+                }
+            ],
+            "versionConditions": [],
+            "teamMappings": []
+        },
+        {
+            "name": "GIT",
+            "description": "",
+            "color": "#FDB813",
+            "requireApprovals": false,
+            "exemptProcesses": [],
+            "lockSnapshots": false,
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "historyCleanupDaysToKeep": -1,
+            "order": 1,
+            "active": true,
+            "propSheet": {"properties": []},
+            "templatePropSheet": {
+                "name": "template",
+                "properties": []
+            },
+            "baseResources": [{
+                "path": "\/Source Control Server Profile",
+                "id": "14251c19-f673-429a-9790-4aac3c97bbf8"
+            }],
+            "componentPropSheets": [
+                {
+                    "properties": [],
+                    "componentName": "Initialise GIT1"
+                },
+                {
+                    "properties": [],
+                    "componentName": "Initialise Jenkins"
+                },
+                {
+                    "properties": [],
+                    "componentName": "Initialise UCD"
+                }
+            ],
+            "versionConditions": [],
+            "teamMappings": []
+        },
+        {
+            "name": "Jenkins",
+            "description": "",
+            "color": "#AB1A86",
+            "requireApprovals": false,
+            "exemptProcesses": [],
+            "lockSnapshots": false,
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "historyCleanupDaysToKeep": -1,
+            "order": 2,
+            "active": true,
+            "propSheet": {"properties": []},
+            "templatePropSheet": {
+                "name": "template",
+                "properties": []
+            },
+            "baseResources": [{
+                "path": "\/Continuous Integration Server Profile",
+                "id": "d4adc475-b0d6-4248-9902-c8d4d44af04d"
+            }],
+            "componentPropSheets": [
+                {
+                    "properties": [],
+                    "componentName": "Initialise GIT1"
+                },
+                {
+                    "properties": [],
+                    "componentName": "Initialise Jenkins"
+                },
+                {
+                    "properties": [],
+                    "componentName": "Initialise UCD"
+                }
+            ],
+            "versionConditions": [],
+            "teamMappings": []
+        },
+        {
+            "name": "UCD",
+            "description": "",
+            "color": "#FDB813",
+            "requireApprovals": false,
+            "exemptProcesses": [],
+            "lockSnapshots": false,
+            "cleanupDaysToKeep": 0,
+            "cleanupCountToKeep": 0,
+            "historyCleanupDaysToKeep": -1,
+            "order": 3,
+            "active": true,
+            "propSheet": {"properties": []},
+            "templatePropSheet": {
+                "name": "template",
+                "properties": []
+            },
+            "baseResources": [{
+                "path": "\/Continuous Deployment Server Profile",
+                "id": "ff0a73a2-0f70-4346-b330-7189886e9afc"
+            }],
+            "componentPropSheets": [
+                {
+                    "properties": [],
+                    "componentName": "Initialise GIT1"
+                },
+                {
+                    "properties": [],
+                    "componentName": "Initialise Jenkins"
+                },
+                {
+                    "properties": [],
+                    "componentName": "Initialise UCD"
+                }
+            ],
+            "versionConditions": [],
+            "teamMappings": []
+        }
+    ],
+    "statuses": [],
+    "processes": [
+        {
+            "name": "Un-DeployUCD",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "from": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "x": -93.5,
+                        "y": 170,
+                        "h": 50,
+                        "w": 290
+                    }
+                ],
+                "type": "graph",
+                "name": "e188b207-2e7e-4f05-bf2c-6477b52dc787",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "children": []
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "componentTag": {
+                            "id": "89bd0569-7d08-4c11-a628-e9c12c291cc3",
+                            "name": "GIT",
+                            "color": "#00B2EF",
+                            "description": "",
+                            "objectType": "Component"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Deploy"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [{
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            }],
+                            "type": "componentEnvironmentIterator",
+                            "name": "da14b0546e701a5c3dee25a3c8a8fa",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "e6e62a95-62b5-42e0-96f7-bbd906e17fc3",
+                                "children": [{
+                                    "componentProcessName": "Deploy",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Deploy"},
+                                    "type": "componentProcess",
+                                    "name": "Install GIT",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [
+                {
+                    "name": "goldUser",
+                    "label": "Framework Owner",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "value": "master",
+                    "required": false,
+                    "description": "Framework Owner",
+                    "placeholder": ""
+                },
+                {
+                    "name": "patternName",
+                    "label": "Framework Pattern Name",
+                    "pattern": "",
+                    "type": "SELECT",
+                    "required": false,
+                    "description": "Framework Pattern Name",
+                    "placeholder": "",
+                    "allowedValues": []
+                },
+                {
+                    "name": "componentName",
+                    "label": "Component Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Component Name",
+                    "placeholder": ""
+                }
+            ],
+            "versionPresets": []
+        },
+        {
+            "name": "Un-Deploy CI\/CD",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "from": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "x": -93.5,
+                        "y": 170,
+                        "h": 50,
+                        "w": 310
+                    }
+                ],
+                "type": "graph",
+                "name": "5c17ed69-2ddc-486e-b270-6a13256adf04",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "children": []
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "componentTag": {
+                            "id": "cf482541-911d-417c-8f02-3458fd670e66",
+                            "name": "DevOps",
+                            "color": "#AB1A86",
+                            "description": "",
+                            "objectType": "Component"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Deploy"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [
+                                {
+                                    "name": "runOnlyOnFirst",
+                                    "value": "false"
+                                },
+                                {
+                                    "name": "failFast",
+                                    "value": "false"
+                                }
+                            ],
+                            "type": "componentEnvironmentIterator",
+                            "name": "f68b79917569dd6de620fcaf710f47",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "a9968a75-8320-40af-a0e1-bceac58bea2d",
+                                "children": [{
+                                    "componentProcessName": "Deploy",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Deploy"},
+                                    "type": "componentProcess",
+                                    "name": "Install DevOps",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [
+                {
+                    "name": "goldUser",
+                    "label": "Framework Owner",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "value": "master",
+                    "required": false,
+                    "description": "Framework Owner",
+                    "placeholder": ""
+                },
+                {
+                    "name": "patternName",
+                    "label": "Framework Pattern Name",
+                    "pattern": "",
+                    "type": "SELECT",
+                    "required": false,
+                    "description": "Framework Pattern Name",
+                    "placeholder": "",
+                    "allowedValues": []
+                },
+                {
+                    "name": "componentName",
+                    "label": "Component Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Component Name",
+                    "placeholder": ""
+                },
+                {
+                    "name": "componentType",
+                    "label": "Component Type",
+                    "pattern": "",
+                    "type": "SELECT",
+                    "required": false,
+                    "description": "Component Type",
+                    "placeholder": "",
+                    "allowedValues": []
+                },
+                {
+                    "name": "cloneUser",
+                    "label": "GIT Developer User Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "GIT Developer User Name",
+                    "placeholder": ""
+                },
+                {
+                    "name": "clonePassword",
+                    "label": "GIT Developer Password",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "GIT Developer Password",
+                    "placeholder": ""
+                }
+            ],
+            "versionPresets": []
+        },
+        {
+            "name": "DeployGIT",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "from": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "x": -93.5,
+                        "y": 170,
+                        "h": 50,
+                        "w": 290
+                    },
+                    {
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    }
+                ],
+                "type": "graph",
+                "name": "5b5ca9e8-29b5-41ca-9e54-9f1d81bcf64f",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "children": []
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "componentTag": {
+                            "id": "89bd0569-7d08-4c11-a628-e9c12c291cc3",
+                            "name": "GIT",
+                            "color": "#00B2EF",
+                            "description": "",
+                            "objectType": "Component"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Deploy"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [{
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            }],
+                            "type": "componentEnvironmentIterator",
+                            "name": "ab8fa7467d134911a36d9c2673d9c1",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "4f48abb6-f203-4193-b673-720c8cab2db2",
+                                "children": [{
+                                    "componentProcessName": "Deploy",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Deploy"},
+                                    "type": "componentProcess",
+                                    "name": "Install GIT",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [
+                {
+                    "name": "patternName",
+                    "label": "Framework Pattern",
+                    "pattern": "",
+                    "type": "SELECT",
+                    "required": false,
+                    "description": "Framework Pattern",
+                    "placeholder": "",
+                    "allowedValues": [
+                        {
+                            "label": "iib\/MQToMQ",
+                            "value": "iib\/MQToMQ"
+                        },
+                        {
+                            "label": "iib\/HttpToHttp",
+                            "value": "iib\/HttpToHttp"
+                        },
+                        {
+                            "label": "iib\/MQToHttp",
+                            "value": "iib\/MQToHttp"
+                        },
+                        {
+                            "label": "iib\/HttpToMQ",
+                            "value": "iib\/HttpToMQ"
+                        },
+                        {
+                            "label": "iib\/cobolTransform",
+                            "value": "iib\/cobolTransform"
+                        },
+                        {
+                            "label": "zconnect\/api",
+                            "value": "zconnect\/api"
+                        },
+                        {
+                            "label": "apic\/api",
+                            "value": "apic\/api"
+                        }
+                    ]
+                },
+                {
+                    "name": "componentName",
+                    "label": "Component Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Component Name",
+                    "placeholder": ""
+                },
+                {
+                    "name": "cloneUser",
+                    "label": "Forking User ",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Forking User ",
+                    "placeholder": ""
+                },
+                {
+                    "name": "clonePassword",
+                    "label": "Git password",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Git password",
+                    "placeholder": ""
+                }
+            ],
+            "versionPresets": []
+        },
+        {
+            "name": "Un-DeployGIT",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "from": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "x": -93.5,
+                        "y": 170,
+                        "h": 50,
+                        "w": 360
+                    }
+                ],
+                "type": "graph",
+                "name": "6632d549-7a95-4e49-b1c6-3031e259173a",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "children": []
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "componentTag": {
+                            "id": "89bd0569-7d08-4c11-a628-e9c12c291cc3",
+                            "name": "GIT",
+                            "color": "#00B2EF",
+                            "description": "",
+                            "objectType": "Component"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "UnDeploy"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [{
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            }],
+                            "type": "componentEnvironmentIterator",
+                            "name": "fd270ec26115e3a368a7a62999b1f4",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "60743ee8-d963-42cf-9ccf-17a30ba52416",
+                                "children": [{
+                                    "componentProcessName": "UnDeploy",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "UnDeploy"},
+                                    "type": "componentProcess",
+                                    "name": "Uninstall Git Repository",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [
+                {
+                    "name": "componentName",
+                    "label": "Component Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Component Name",
+                    "placeholder": ""
+                },
+                {
+                    "name": "cloneUser",
+                    "label": "GIT Developer User Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "GIT Developer User Name",
+                    "placeholder": ""
+                },
+                {
+                    "name": "clonePassword",
+                    "label": "GIT Developer Password",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "GIT Developer Password",
+                    "placeholder": ""
+                },
+                {
+                    "name": "patternName",
+                    "label": "Framework pattern name",
+                    "pattern": "",
+                    "type": "SELECT",
+                    "required": false,
+                    "description": "Framework pattern name",
+                    "placeholder": "",
+                    "allowedValues": [
+                        {
+                            "label": "iib\/MQToMQ",
+                            "value": "iib\/MQToMQ"
+                        },
+                        {
+                            "label": "iib\/HttpToHttp",
+                            "value": "iib\/HttpToHttp"
+                        },
+                        {
+                            "label": "iib\/MQToHttp",
+                            "value": "iib\/MQToHttp"
+                        },
+                        {
+                            "label": "iib\/HttpToMQ",
+                            "value": "iib\/HttpToMQ"
+                        },
+                        {
+                            "label": "iib\/cobolTransform",
+                            "value": "iib\/cobolTransform"
+                        },
+                        {
+                            "label": "zconnect\/api",
+                            "value": "zconnect\/api"
+                        },
+                        {
+                            "label": "apic\/api",
+                            "value": "apic\/api"
+                        }
+                    ]
+                }
+            ],
+            "versionPresets": []
+        },
+        {
+            "name": "DeployJenkins",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "from": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "x": -93.5,
+                        "y": 170,
+                        "h": 50,
+                        "w": 330
+                    }
+                ],
+                "type": "graph",
+                "name": "26e1ea64-f6db-432f-9268-8cef4ddeff36",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "children": []
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "componentTag": {
+                            "id": "1093d910-f863-49ab-bfe8-c34130ea13e9",
+                            "name": "Jenkins",
+                            "color": "#FFCF01",
+                            "description": "",
+                            "objectType": "Component"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Deploy"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [{
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            }],
+                            "type": "componentEnvironmentIterator",
+                            "name": "055c795de6d52a9ecbe869844f7097",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "c875c497-6166-44f5-9412-29f6e665526c",
+                                "children": [{
+                                    "componentProcessName": "Deploy",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Deploy"},
+                                    "type": "componentProcess",
+                                    "name": "Install Jenkins Job",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [
+                {
+                    "name": "patternName",
+                    "label": "Framework Pattern",
+                    "pattern": "",
+                    "type": "SELECT",
+                    "required": false,
+                    "description": "Framework Pattern",
+                    "placeholder": "",
+                    "allowedValues": [
+                        {
+                            "label": "iib\/MQToMQ",
+                            "value": "iib\/MQToMQ"
+                        },
+                        {
+                            "label": "iib\/HttpToHttp",
+                            "value": "iib\/HttpToHttp"
+                        },
+                        {
+                            "label": "iib\/MQToHttp",
+                            "value": "iib\/MQToHttp"
+                        },
+                        {
+                            "label": "iib\/HttpToMQ",
+                            "value": "iib\/HttpToMQ"
+                        },
+                        {
+                            "label": "iib\/cobolTransform",
+                            "value": "iib\/cobolTransform"
+                        },
+                        {
+                            "label": "zconnect\/api",
+                            "value": "zconnect\/api"
+                        },
+                        {
+                            "label": "apic\/api",
+                            "value": "apic\/api"
+                        }
+                    ]
+                },
+                {
+                    "name": "componentName",
+                    "label": "Component Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Component Name",
+                    "placeholder": ""
+                }
+            ],
+            "versionPresets": []
+        },
+        {
+            "name": "Un-DeployJenkins",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "from": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "x": -93.5,
+                        "y": 170,
+                        "h": 50,
+                        "w": 350
+                    },
+                    {
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    }
+                ],
+                "type": "graph",
+                "name": "a18a01af-6d0e-4563-8c28-c909a463778d",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "children": []
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "componentTag": {
+                            "id": "1093d910-f863-49ab-bfe8-c34130ea13e9",
+                            "name": "Jenkins",
+                            "color": "#FFCF01",
+                            "description": "",
+                            "objectType": "Component"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "UnDeploy"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [{
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            }],
+                            "type": "componentEnvironmentIterator",
+                            "name": "d476a463d34e1a9fa0cc4a5b44062b",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "8f9ed5f6-38be-4789-b417-19b58638c207",
+                                "children": [{
+                                    "componentProcessName": "UnDeploy",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "UnDeploy"},
+                                    "type": "componentProcess",
+                                    "name": "Uninstall Jenkins Job",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [
+                {
+                    "name": "componentName",
+                    "label": "Component Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Component Name",
+                    "placeholder": ""
+                },
+                {
+                    "name": "patternName",
+                    "label": "Framework pattern name",
+                    "pattern": "",
+                    "type": "SELECT",
+                    "required": false,
+                    "description": "Framework pattern name",
+                    "placeholder": "",
+                    "allowedValues": [
+                        {
+                            "label": "iib\/MQToMQ",
+                            "value": "iib\/MQToMQ"
+                        },
+                        {
+                            "label": "iib\/HttpToHttp",
+                            "value": "iib\/HttpToHttp"
+                        },
+                        {
+                            "label": "iib\/MQToHttp",
+                            "value": "iib\/MQToHttp"
+                        },
+                        {
+                            "label": "iib\/HttpToMQ",
+                            "value": "iib\/HttpToMQ"
+                        },
+                        {
+                            "label": "iib\/cobolTransform",
+                            "value": "iib\/cobolTransform"
+                        },
+                        {
+                            "label": "zconnect\/api",
+                            "value": "zconnect\/api"
+                        },
+                        {
+                            "label": "apic\/api",
+                            "value": "apic\/api"
+                        }
+                    ]
+                }
+            ],
+            "versionPresets": []
+        },
+        {
+            "name": "DeployUCD",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "from": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "SUCCESS",
+                        "value": ""
+                    },
+                    {
+                        "to": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "ALWAYS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "x": -93.5,
+                        "y": 170,
+                        "h": 50,
+                        "w": 290
+                    },
+                    {
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    }
+                ],
+                "type": "graph",
+                "name": "3db79cab-972d-447a-a53f-84b5f38f9ae1",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "children": []
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "componentTag": {
+                            "id": "34a8c0af-aa94-4b3b-afe8-c6e4da924409",
+                            "name": "UCD",
+                            "color": "#17AF4B",
+                            "description": "",
+                            "objectType": "Component"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Deploy"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [{
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            }],
+                            "type": "componentEnvironmentIterator",
+                            "name": "52e89ab5aac90d5445024a0e8f1b93",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "da7220e4-0838-410b-b086-91b927aa4e1e",
+                                "children": [{
+                                    "componentProcessName": "Deploy",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Deploy"},
+                                    "type": "componentProcess",
+                                    "name": "Install UCD",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [
+                {
+                    "name": "patternName",
+                    "label": "Framework Pattern Name",
+                    "pattern": "",
+                    "type": "SELECT",
+                    "required": false,
+                    "description": "Framework Pattern Name",
+                    "placeholder": "",
+                    "allowedValues": [
+                        {
+                            "label": "iib\/MQToMQ",
+                            "value": "iib\/MQToMQ"
+                        },
+                        {
+                            "label": "iib\/HttpToHttp",
+                            "value": "iib\/HttpToHttp"
+                        },
+                        {
+                            "label": "iib\/MQToHttp",
+                            "value": "iib\/MQToHttp"
+                        },
+                        {
+                            "label": "iib\/HttpToMQ",
+                            "value": "iib\/HttpToMQ"
+                        },
+                        {
+                            "label": "iib\/cobolTransform",
+                            "value": "iib\/cobolTransform"
+                        },
+                        {
+                            "label": "zconnect\/api",
+                            "value": "zconnect\/api"
+                        },
+                        {
+                            "label": "apic\/api",
+                            "value": "apic\/api"
+                        }
+                    ]
+                },
+                {
+                    "name": "componentName",
+                    "label": "Component Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Component Name",
+                    "placeholder": ""
+                }
+            ],
+            "versionPresets": []
+        },
+        {
+            "name": "Deploy CI\/CD",
+            "description": "",
+            "inventoryManagementType": "AUTOMATIC",
+            "offlineAgentHandling": "PRE_EXECUTION_CHECK",
+            "rootActivity": {
+                "edges": [
+                    {
+                        "to": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "ALWAYS",
+                        "value": ""
+                    },
+                    {
+                        "to": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "from": "44e2f8025af6822d0bf853b2750f8c",
+                        "type": "SUCCESS",
+                        "value": ""
+                    }
+                ],
+                "offsets": [
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "x": -93.5,
+                        "y": 170,
+                        "h": 50,
+                        "w": 310
+                    },
+                    {
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "x": -5,
+                        "y": 420,
+                        "h": 50,
+                        "w": 90
+                    }
+                ],
+                "type": "graph",
+                "name": "39e84efd-1c96-4956-b8d0-37120331016c",
+                "children": [
+                    {
+                        "type": "finish",
+                        "name": "7f4fcc4ea6b7aeea6a1e3acc37c108",
+                        "children": []
+                    },
+                    {
+                        "name": "44e2f8025af6822d0bf853b2750f8c",
+                        "componentTag": {
+                            "id": "cf482541-911d-417c-8f02-3458fd670e66",
+                            "name": "DevOps",
+                            "color": "#AB1A86",
+                            "description": "",
+                            "objectType": "Component"
+                        },
+                        "properties": [
+                            {
+                                "name": "activity.componentProcess.name",
+                                "value": "Deploy"
+                            },
+                            {
+                                "name": "maxIteration",
+                                "value": "-1"
+                            },
+                            {
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            },
+                            {
+                                "name": "failFast",
+                                "value": "false"
+                            }
+                        ],
+                        "type": "multiComponentEnvironmentIterator",
+                        "children": [{
+                            "properties": [{
+                                "name": "runOnlyOnFirst",
+                                "value": "false"
+                            }],
+                            "type": "componentEnvironmentIterator",
+                            "name": "9d238083210337a44ca84249618b47",
+                            "children": [{
+                                "status": "Active",
+                                "type": "inventoryVersionDiff",
+                                "name": "03c79115-8765-4b7a-8673-cb61e494ba05",
+                                "children": [{
+                                    "componentProcessName": "Deploy",
+                                    "allowFailure": false,
+                                    "properties": {"activity.componentProcess.name": "Deploy"},
+                                    "type": "componentProcess",
+                                    "name": "Install DevOps",
+                                    "children": []
+                                }]
+                            }]
+                        }]
+                    }
+                ]
+            },
+            "propDefs": [
+                {
+                    "name": "patternName",
+                    "label": "Framework Pattern Name",
+                    "pattern": "",
+                    "type": "SELECT",
+                    "required": false,
+                    "description": "Framework Pattern Name",
+                    "placeholder": "",
+                    "allowedValues": [
+                        {
+                            "label": "iib\/MQToMQ",
+                            "value": "iib\/MQToMQ"
+                        },
+                        {
+                            "label": "iib\/HttpToHttp",
+                            "value": "iib\/HttpToHttp"
+                        },
+                        {
+                            "label": "iib\/MQToHttp",
+                            "value": "iib\/MQToHttp"
+                        },
+                        {
+                            "label": "iib\/HttpToMQ",
+                            "value": "iib\/HttpToMQ"
+                        },
+                        {
+                            "label": "iib\/cobolTransform",
+                            "value": "iib\/cobolTransform"
+                        },
+                        {
+                            "label": "zconnect\/api",
+                            "value": "zconnect\/api"
+                        },
+                        {
+                            "label": "apic\/api",
+                            "value": "apic\/api"
+                        }
+                    ]
+                },
+                {
+                    "name": "componentName",
+                    "label": "Component Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "Component Name",
+                    "placeholder": ""
+                },
+                {
+                    "name": "cloneUser",
+                    "label": "GIT Developer User Name",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "GIT Developer User Name",
+                    "placeholder": ""
+                },
+                {
+                    "name": "clonePassword",
+                    "label": "GIT Developer Password",
+                    "pattern": "",
+                    "type": "TEXT",
+                    "required": false,
+                    "description": "GIT Developer Password",
+                    "placeholder": ""
+                }
+            ],
+            "versionPresets": []
+        }
+    ],
+    "genericProcesses": [],
+    "teamMappings": [],
+    "tags": []
+}
