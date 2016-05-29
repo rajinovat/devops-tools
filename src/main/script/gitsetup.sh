@@ -34,14 +34,14 @@ usage: $0 options
 OPTIONS:
     -h Help
 	-g gold repository owner 	- The owner of gold master repository
-	-p patternName				- Name of the gold master repository
-	-c componentName			- Name of the new component.This value will be used to create target cloned repository  
-	-u clone username			- The user cloning from gold master repository
-	-w clone password			- The password of the user cloning from gold master repository
-	-j githost					- The git url e.g [github.com] [localhost]
-	-k gitPort					- Git port
-	-l scmtype					- scmtype type [gitblit] [stash]
-	-m command					- [create] [delete]
+	-p patternName			- Name of the gold master repository
+	-c componentName		- Name of the new component.This value will be used to create target cloned repository  
+	-u clone username		- The user cloning from gold master repository
+	-w clone password		- The password of the user cloning from gold master repository
+	-j githost			- The git url e.g [github.com] [localhost]
+	-k gitPort			- Git port
+	-l scmtype			- scmtype type [gitblit] [stash]
+	-m command			- [create] [delete]
 EOF
 }
 

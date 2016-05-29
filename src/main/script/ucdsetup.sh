@@ -83,11 +83,8 @@ checkIfObjectExists
 
 componentType=${patternName%/*}
 #patternOnly=${patternName##*/}
-templatesrc="../templates"
-
-cp -rp ${templatesrc} /tmp
  
-templatelocation="/tmp/templates"
+templatelocation="templates"
 
 ucd_component_json="${templatelocation}/createComponent.json"      #remove .. to reference template directory located at the root of the package 
 

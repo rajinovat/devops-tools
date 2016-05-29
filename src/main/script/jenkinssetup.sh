@@ -33,13 +33,13 @@ OPTIONS:
 	-h Help	
 	-p patternName				- Name of the gold master repository
 	-c componentName			- Name of the new component.This value will be used to create target cloned repository  
-	-g githost					- The git url e.g [github.com] [localhost]
-	-o gitPort					- Git port
+	-g githost				- The git url e.g [github.com] [localhost]
+	-o gitPort				- Git port
 	-j JenkinsUser				- Jenkins User
 	-k JenkinsPassword			- JenkinsPassword
    	-l jenkinsHost				- Jinkins Hostname
 	-m jenkinsPort				- Jenkins Port
-	-n command					- [create] [delete]
+	-n command				- [create] [delete]
 EOF
 }
 
@@ -52,11 +52,8 @@ if [ "${scmtype}"	==	"gitblit"	]; then
    
 	gitURLComponent="ssh://${CIUser}@${gitHOST}:${gitPort}/${componentType}/${componentName}.git" 
 fi
-templatesrc="../templates"
 
-cp -rp ${templatesrc} /tmp
- 
-templatelocation="/tmp/templates"
+templatelocation="templates"
 
 jenkins_template="${templatelocation}/jenkinsjobconfig.xml"
 
